@@ -63,6 +63,13 @@ img{display:block}
 .setsel button.on{border-color:var(--accent);color:var(--accent);background:#F2F8FC}
 .setsel button.on b{background:var(--accent)}
 
+/* 6 資料（ほかの課題と色を変える） */
+.setsel button[data-set="6"]{border-color:#A6CFC8;color:#0B6A5E}
+.setsel button[data-set="6"] b{background:#5AAEA2}
+.setsel button[data-set="6"]:hover{border-color:#0E7C6E}
+.setsel button[data-set="6"].on{border-color:#0E7C6E;color:#0E7C6E;background:#EBF7F5}
+.setsel button[data-set="6"].on b{background:#0E7C6E}
+
 .seg{margin-left:.5rem;display:flex;background:#DCE4EA;border-radius:99px;padding:.22rem;gap:.2rem;flex:0 0 auto}
 .seg button{font:inherit;font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:1.02rem;cursor:pointer;
   border:0;background:none;color:var(--ink-2);border-radius:99px;padding:.35rem 1.15rem;transition:.16s}
@@ -394,6 +401,20 @@ img{display:block}
 .done p{font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:1.1rem}
 .again{font:inherit;font-size:.85rem;cursor:pointer;background:var(--accent);color:#fff;border:0;border-radius:99px;padding:.4em 1.4em;font-weight:700}
 
+/* ---------- 6 資料（中のタブと iframe） ---------- */
+.refwrap{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+.reftabs{flex:0 0 auto;display:flex;gap:.3rem;padding-left:.2rem}
+.reftabs button{font:inherit;font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:1.1rem;cursor:pointer;
+  background:#fff;border:2px solid var(--line);border-bottom:0;color:var(--ink-2);
+  border-radius:10px 10px 0 0;padding:.3rem 1.3rem;transition:.15s;white-space:nowrap}
+.reftabs button:hover{border-color:var(--accent);color:var(--accent)}
+.reftabs button:focus-visible{outline:3px solid #FFD24A;outline-offset:2px}
+.reftabs button.on{border-color:var(--accent);background:var(--accent);color:#fff}
+.refbody{flex:1 1 auto;min-height:0;position:relative;overflow:hidden;background:#fff;
+  border:2px solid var(--accent);border-radius:0 var(--r) var(--r) var(--r)}
+.refframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:none;background:#fff}
+.refframe.on{display:block}
+
 /* 画面がせまいときは、文字の大きさはそのままで、まわりの余白だけつめる */
 @media (max-width:1400px){
   .head{gap:.7rem}
@@ -403,6 +424,7 @@ img{display:block}
   .seg{margin-left:.3rem}
   .seg button{padding:.35rem .9rem}
   .head h1{font-size:1.15rem}
+  .setsel .xlbl{display:none}   /* 「風水害とたいさく」→「風水害」など。文字は小さくしない */
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
 @media (max-width:940px){
@@ -433,10 +455,11 @@ img{display:block}
         </div>
         <div class="setsel" id="setsel">
           <button class="on" data-set="1"><b>1</b>自然災害</button>
-          <button data-set="2"><b>2</b>風水害とたいさく</button>
-          <button data-set="3"><b>3</b>都や区のそなえ</button>
-          <button data-set="4"><b>4</b>自分たちのそなえ</button>
+          <button data-set="2"><b>2</b>風水害<span class="xlbl">とたいさく</span></button>
+          <button data-set="3"><b>3</b>都や区<span class="xlbl">のそなえ</span></button>
+          <button data-set="4"><b>4</b>自分たち<span class="xlbl">のそなえ</span></button>
           <button data-set="5"><b>5</b>まとめ</button>
+          <button data-set="6"><b>6</b>資料</button>
         </div>
         <div class="seg" id="seg1">
           <button class="on" data-v="doc">説明</button>
@@ -763,6 +786,1834 @@ img{display:block}
         </div>
       </div>
 
+      <!-- ---------- 資料（3つの読み物） ---------- -->
+      <div class="setwrap" data-set="6" style="--accent:#0E7C6E">
+        <div class="refwrap">
+          <div class="reftabs" id="reftabs">
+            <button class="on" data-r="0">都市部の変化</button>
+            <button data-r="1">台風ができるまで</button>
+            <button data-r="2">岩渕水門</button>
+          </div>
+          <div class="refbody">
+                <iframe class="refframe on" data-r="0" title="雨がふったあと、水はどこへ行く？" srcdoc="<!DOCTYPE html>
+<html lang=&quot;ja&quot;>
+<head>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>雨がふったあと、水はどこへ行く?</title>
+<style>
+:root{
+  --ink:#22303A; --sub:#5A6873; --page:#E9EEF2; --card:#FCFBF8;
+  --mukashi:#2F6B34; --ima:#B23A22; --mizu:#4A8CCB; --kiken:#C0392B;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--page); color:var(--ink);
+  font-family:&quot;Hiragino Kaku Gothic ProN&quot;,&quot;Hiragino Sans&quot;,&quot;Yu Gothic&quot;,&quot;Meiryo&quot;,sans-serif;
+  height:100vh; display:flex; flex-direction:column; overflow:hidden; padding:12px 16px 10px; gap:8px;
+}
+h1{font-size:clamp(19px,2.8vh,28px); font-weight:600; margin:0}
+h1 span{font-weight:400; color:var(--sub); font-size:.78em; margin-left:10px}
+.wrap{flex:1; min-height:0; display:flex; gap:14px}
+.pnl{flex:1; min-width:0; background:var(--card); border-radius:14px; padding:8px 12px;
+  display:flex; flex-direction:column; gap:4px; box-shadow:0 1px 0 rgba(34,48,58,.08)}
+.ttl{font-size:clamp(22px,3.6vh,35px); font-weight:600; display:flex; align-items:baseline; gap:10px; line-height:1.2}
+.pnl.a .ttl{color:var(--mukashi)}
+.pnl.b .ttl{color:var(--ima)}
+.ttl em{font-style:normal; font-size:.6em; font-weight:500; color:var(--sub)}
+.stage{flex:1; min-height:0}
+svg{width:100%; height:100%; display:block}
+ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:1px}
+ol li{font-size:clamp(13px,2vh,19px); line-height:1.5; color:var(--sub); opacity:.35; transition:opacity .4s,color .4s}
+ol li.on{opacity:1; color:var(--ink); font-weight:600}
+ol li b{display:inline-block; width:1.5em; font-weight:600}
+.meter{display:flex; align-items:center; gap:8px; font-size:clamp(14px,2.2vh,20px); margin-top:2px}
+.bar{flex:1; height:11px; border-radius:6px; background:#DEE5EA; overflow:hidden; position:relative}
+.bar i{display:block; height:100%; width:0; background:var(--mizu); border-radius:6px}
+.bar u{position:absolute; top:-3px; left:89%; width:2px; height:17px; background:var(--kiken)}
+.num{font-variant-numeric:tabular-nums; font-weight:600; min-width:3.6em; text-align:right}
+.num.over{color:var(--kiken)}
+.ctrl{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+button{font:inherit; cursor:pointer; border:0}
+#btn{
+  font-size:clamp(16px,2.4vh,22px); font-weight:600; color:#fff; background:var(--ink);
+  border-radius:10px; padding:.55em 1.5em;
+}
+#btn:hover{background:#33454F}
+.seg{display:inline-flex; border:2px solid var(--ink); border-radius:10px; overflow:hidden}
+.seg button{
+  font-size:clamp(15px,2.3vh,20px); font-weight:600; color:var(--ink); background:#fff;
+  padding:.45em 1.2em;
+}
+.seg button.on{background:var(--ink); color:#fff}
+button:focus-visible{outline:3px solid var(--mizu); outline-offset:2px}
+.clock{font-size:clamp(14px,2.2vh,19px); color:var(--sub)}
+.clock b{color:var(--ink); font-variant-numeric:tabular-nums}
+@keyframes fall{0%{transform:translateY(-22px);opacity:0}12%{opacity:.9}100%{transform:translateY(98px);opacity:.15}}
+@keyframes flow{to{stroke-dashoffset:-48}}
+.rain line{opacity:0}
+.go .rain line{animation:fall var(--d,1.1s) linear infinite}
+.go .slow{animation:flow 4.5s linear infinite}
+.go .fast{animation:flow .6s linear infinite}
+@media (prefers-reduced-motion:reduce){
+  .go .rain line,.go .slow,.go .fast{animation:none}
+  .rain line{opacity:.7}
+}
+@media (max-width:760px){ .wrap{flex-direction:column} body{overflow:auto; height:auto} }
+</style>
+</head>
+<body>
+
+<h1>雨がふったあと、水はどこへ行く?<span>同じ量の雨をふらせて、川の水のふえ方をくらべよう</span></h1>
+
+<div class=&quot;wrap&quot;>
+
+  <section class=&quot;pnl a&quot;>
+    <div class=&quot;ttl&quot;>むかし <em>開発が進む前</em></div>
+    <div class=&quot;stage&quot;>
+      <svg viewBox=&quot;0 0 320 300&quot; preserveAspectRatio=&quot;xMidYMid meet&quot; role=&quot;img&quot; aria-label=&quot;むかしは雨が木や田んぼに受けとめられ、地面にしみこんで地下水になり、ゆっくり川へ流れるので川の水は少ししか上がらない&quot;>
+        <defs>
+          <marker id=&quot;ab&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;7&quot; refY=&quot;5&quot; markerWidth=&quot;5&quot; markerHeight=&quot;5&quot; orient=&quot;auto&quot;>
+            <path d=&quot;M2 1L8 5L2 9&quot; fill=&quot;none&quot; stroke=&quot;#2F6FB0&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/>
+          </marker>
+        </defs>
+
+        <g fill=&quot;#B2BAC5&quot;><ellipse cx=&quot;50&quot; cy=&quot;40&quot; rx=&quot;24&quot; ry=&quot;14&quot;/><ellipse cx=&quot;78&quot; cy=&quot;31&quot; rx=&quot;29&quot; ry=&quot;18&quot;/><ellipse cx=&quot;106&quot; cy=&quot;41&quot; rx=&quot;20&quot; ry=&quot;12&quot;/></g>
+        <rect x=&quot;26&quot; y=&quot;40&quot; width=&quot;100&quot; height=&quot;10&quot; rx=&quot;5&quot; fill=&quot;#B2BAC5&quot;/>
+        <rect x=&quot;26&quot; y=&quot;45&quot; width=&quot;100&quot; height=&quot;5&quot; rx=&quot;2.5&quot; fill=&quot;#98A2AF&quot;/>
+        <g class=&quot;rain&quot; id=&quot;rainA&quot; transform=&quot;translate(0,54)&quot; stroke=&quot;#5B93D6&quot; stroke-linecap=&quot;round&quot;></g>
+
+        <path d=&quot;M0 150 H244 V262 H296 V150 H320 V300 H0 Z&quot; fill=&quot;#D8C09A&quot;/>
+        <rect x=&quot;0&quot; y=&quot;150&quot; width=&quot;244&quot; height=&quot;8&quot; fill=&quot;#6FA644&quot;/><rect x=&quot;296&quot; y=&quot;150&quot; width=&quot;24&quot; height=&quot;8&quot; fill=&quot;#6FA644&quot;/>
+        <rect x=&quot;0&quot; y=&quot;268&quot; width=&quot;320&quot; height=&quot;24&quot; fill=&quot;#BBD9F2&quot;/>
+        <rect x=&quot;0&quot; y=&quot;292&quot; width=&quot;320&quot; height=&quot;8&quot; fill=&quot;#C8AE86&quot;/>
+
+        <g>
+          <rect x=&quot;26&quot; y=&quot;134&quot; width=&quot;6&quot; height=&quot;17&quot; fill=&quot;#7A5A32&quot;/>
+          <circle cx=&quot;29&quot; cy=&quot;124&quot; r=&quot;15&quot; fill=&quot;#3F6E28&quot;/><circle cx=&quot;19&quot; cy=&quot;131&quot; r=&quot;10&quot; fill=&quot;#4F8433&quot;/><circle cx=&quot;39&quot; cy=&quot;130&quot; r=&quot;11&quot; fill=&quot;#4F8433&quot;/><circle cx=&quot;30&quot; cy=&quot;116&quot; r=&quot;9&quot; fill=&quot;#5E9A3C&quot;/>
+          <rect x=&quot;66&quot; y=&quot;138&quot; width=&quot;5&quot; height=&quot;13&quot; fill=&quot;#7A5A32&quot;/>
+          <circle cx=&quot;68&quot; cy=&quot;130&quot; r=&quot;12&quot; fill=&quot;#3F6E28&quot;/><circle cx=&quot;60&quot; cy=&quot;136&quot; r=&quot;8&quot; fill=&quot;#4F8433&quot;/><circle cx=&quot;76&quot; cy=&quot;135&quot; r=&quot;9&quot; fill=&quot;#4F8433&quot;/>
+        </g>
+
+        <rect x=&quot;100&quot; y=&quot;140&quot; width=&quot;76&quot; height=&quot;11&quot; fill=&quot;#9CC9EA&quot;/>
+        <g stroke=&quot;#4F8433&quot; stroke-width=&quot;1.5&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;>
+          <path d=&quot;M110 140v-7M110 136l-4-4M110 136l4-4&quot;/><path d=&quot;M126 140v-7M126 136l-4-4M126 136l4-4&quot;/>
+          <path d=&quot;M142 140v-7M142 136l-4-4M142 136l4-4&quot;/><path d=&quot;M158 140v-7M158 136l-4-4M158 136l4-4&quot;/>
+          <path d=&quot;M170 140v-6M170 136l-4-3M170 136l4-3&quot;/>
+        </g>
+        <rect x=&quot;96&quot; y=&quot;138&quot; width=&quot;6&quot; height=&quot;14&quot; fill=&quot;#9C8055&quot;/><rect x=&quot;174&quot; y=&quot;138&quot; width=&quot;6&quot; height=&quot;14&quot; fill=&quot;#9C8055&quot;/>
+        <path d=&quot;M192 150 Q196 143 208 143 Q222 143 226 150 Z&quot; fill=&quot;#C8AE86&quot;/>
+        <ellipse cx=&quot;209&quot; cy=&quot;148&quot; rx=&quot;15&quot; ry=&quot;4.5&quot; fill=&quot;#9CC9EA&quot;/>
+
+        <path d=&quot;M204 162 H300&quot; stroke=&quot;#C0392B&quot; stroke-width=&quot;1.8&quot; stroke-dasharray=&quot;6 4&quot; fill=&quot;none&quot;/>
+        <text x=&quot;198&quot; y=&quot;178&quot; font-size=&quot;15&quot; fill=&quot;#C0392B&quot; text-anchor=&quot;end&quot;>こう水ライン</text>
+        <text x=&quot;12&quot; y=&quot;194&quot; font-size=&quot;17&quot; fill=&quot;#4A3A22&quot; font-weight=&quot;600&quot;>地面にしみこむ</text>
+        <g class=&quot;slow&quot; stroke=&quot;#2F6FB0&quot; stroke-width=&quot;2.4&quot; stroke-dasharray=&quot;6 8&quot; stroke-linecap=&quot;round&quot; fill=&quot;none&quot; marker-end=&quot;url(#ab)&quot;>
+          <path d=&quot;M40 202 V252&quot;/><path d=&quot;M85 202 V252&quot;/><path d=&quot;M130 202 V252&quot;/>
+        </g>
+        <text x=&quot;166&quot; y=&quot;262&quot; font-size=&quot;15&quot; fill=&quot;#0C447C&quot;>ゆっくり川へ</text>
+        <text x=&quot;12&quot; y=&quot;287&quot; font-size=&quot;16&quot; fill=&quot;#0C447C&quot; font-weight=&quot;600&quot;>地下水</text>
+        <path class=&quot;slow&quot; d=&quot;M62 281 H234&quot; stroke=&quot;#2F6FB0&quot; stroke-width=&quot;2.4&quot; stroke-dasharray=&quot;6 8&quot; stroke-linecap=&quot;round&quot; fill=&quot;none&quot; marker-end=&quot;url(#ab)&quot;/>
+
+        <rect id=&quot;wOld&quot; x=&quot;244&quot; y=&quot;262&quot; width=&quot;52&quot; height=&quot;0&quot; fill=&quot;#4A8CCB&quot;/>
+        <path d=&quot;M244 150 V262 H296 V150&quot; fill=&quot;none&quot; stroke=&quot;#8A7A5E&quot; stroke-width=&quot;1.5&quot;/>
+        <text x=&quot;270&quot; y=&quot;143&quot; font-size=&quot;17&quot; fill=&quot;#0C447C&quot; text-anchor=&quot;middle&quot; font-weight=&quot;600&quot;>川</text>
+      </svg>
+    </div>
+    <ol>
+      <li id=&quot;a1&quot;><b>1</b>木や田んぼが雨をうけとめる</li>
+      <li id=&quot;a2&quot;><b>2</b>のこりは地面にしみこむ</li>
+      <li id=&quot;a3&quot;><b>3</b>地下水になってゆっくり川へ</li>
+    </ol>
+    <div class=&quot;meter&quot;><span>川の水</span><span class=&quot;bar&quot;><i id=&quot;bOld&quot;></i><u></u></span><span class=&quot;num&quot; id=&quot;pOld&quot;>0%</span></div>
+  </section>
+
+  <section class=&quot;pnl b&quot;>
+    <div class=&quot;ttl&quot;>いま <em>開発が進んだあと</em></div>
+    <div class=&quot;stage&quot;>
+      <svg viewBox=&quot;0 0 320 300&quot; preserveAspectRatio=&quot;xMidYMid meet&quot; role=&quot;img&quot; aria-label=&quot;いまは雨が屋根とほそう道路を流れ、下水道から一度に川へ流れこみ、大雨のときは川があふれる&quot;>
+        <defs>
+          <marker id=&quot;ar&quot; viewBox=&quot;0 0 10 10&quot; refX=&quot;7&quot; refY=&quot;5&quot; markerWidth=&quot;5&quot; markerHeight=&quot;5&quot; orient=&quot;auto&quot;>
+            <path d=&quot;M2 1L8 5L2 9&quot; fill=&quot;none&quot; stroke=&quot;#C0442A&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;/>
+          </marker>
+        </defs>
+
+        <g fill=&quot;#B2BAC5&quot;><ellipse cx=&quot;50&quot; cy=&quot;40&quot; rx=&quot;24&quot; ry=&quot;14&quot;/><ellipse cx=&quot;78&quot; cy=&quot;31&quot; rx=&quot;29&quot; ry=&quot;18&quot;/><ellipse cx=&quot;106&quot; cy=&quot;41&quot; rx=&quot;20&quot; ry=&quot;12&quot;/></g>
+        <rect x=&quot;26&quot; y=&quot;40&quot; width=&quot;100&quot; height=&quot;10&quot; rx=&quot;5&quot; fill=&quot;#B2BAC5&quot;/>
+        <rect x=&quot;26&quot; y=&quot;45&quot; width=&quot;100&quot; height=&quot;5&quot; rx=&quot;2.5&quot; fill=&quot;#98A2AF&quot;/>
+        <g class=&quot;rain&quot; id=&quot;rainB&quot; transform=&quot;translate(0,54)&quot; stroke=&quot;#5B93D6&quot; stroke-linecap=&quot;round&quot;></g>
+
+        <path d=&quot;M0 150 H244 V262 H296 V150 H320 V300 H0 Z&quot; fill=&quot;#D8C09A&quot;/>
+        <rect x=&quot;0&quot; y=&quot;150&quot; width=&quot;244&quot; height=&quot;9&quot; fill=&quot;#83837E&quot;/><rect x=&quot;296&quot; y=&quot;150&quot; width=&quot;24&quot; height=&quot;9&quot; fill=&quot;#83837E&quot;/>
+        <rect x=&quot;0&quot; y=&quot;274&quot; width=&quot;320&quot; height=&quot;12&quot; fill=&quot;#D3E5F6&quot;/>
+
+        <g stroke=&quot;#9A968C&quot; stroke-width=&quot;.8&quot;>
+          <rect x=&quot;14&quot; y=&quot;126&quot; width=&quot;30&quot; height=&quot;24&quot; fill=&quot;#F0EEE7&quot;/>
+          <rect x=&quot;56&quot; y=&quot;122&quot; width=&quot;32&quot; height=&quot;28&quot; fill=&quot;#EDEBE3&quot;/>
+          <rect x=&quot;132&quot; y=&quot;128&quot; width=&quot;28&quot; height=&quot;22&quot; fill=&quot;#F0EEE7&quot;/>
+        </g>
+        <g fill=&quot;#B5513C&quot;>
+          <path d=&quot;M9 127 L29 111 L49 127 Z&quot;/><path d=&quot;M51 123 L72 106 L93 123 Z&quot;/><path d=&quot;M127 129 L146 114 L165 129 Z&quot;/>
+        </g>
+        <rect x=&quot;96&quot; y=&quot;100&quot; width=&quot;30&quot; height=&quot;50&quot; fill=&quot;#E4E2DA&quot; stroke=&quot;#9A968C&quot; stroke-width=&quot;.8&quot;/>
+        <g fill=&quot;#A9C4D6&quot;>
+          <rect x=&quot;100&quot; y=&quot;105&quot; width=&quot;8&quot; height=&quot;7&quot;/><rect x=&quot;114&quot; y=&quot;105&quot; width=&quot;8&quot; height=&quot;7&quot;/>
+          <rect x=&quot;100&quot; y=&quot;118&quot; width=&quot;8&quot; height=&quot;7&quot;/><rect x=&quot;114&quot; y=&quot;118&quot; width=&quot;8&quot; height=&quot;7&quot;/>
+          <rect x=&quot;100&quot; y=&quot;131&quot; width=&quot;8&quot; height=&quot;7&quot;/><rect x=&quot;114&quot; y=&quot;131&quot; width=&quot;8&quot; height=&quot;7&quot;/>
+          <rect x=&quot;20&quot; y=&quot;133&quot; width=&quot;9&quot; height=&quot;8&quot;/><rect x=&quot;62&quot; y=&quot;130&quot; width=&quot;9&quot; height=&quot;8&quot;/><rect x=&quot;137&quot; y=&quot;134&quot; width=&quot;8&quot; height=&quot;7&quot;/>
+        </g>
+        <g fill=&quot;#8A7A5E&quot;><rect x=&quot;33&quot; y=&quot;139&quot; width=&quot;8&quot; height=&quot;11&quot;/><rect x=&quot;76&quot; y=&quot;137&quot; width=&quot;8&quot; height=&quot;13&quot;/><rect x=&quot;150&quot; y=&quot;139&quot; width=&quot;7&quot; height=&quot;11&quot;/></g>
+
+        <path class=&quot;fast&quot; d=&quot;M18 155 H208&quot; stroke=&quot;#C0442A&quot; stroke-width=&quot;3.4&quot; stroke-dasharray=&quot;10 8&quot; stroke-linecap=&quot;round&quot; fill=&quot;none&quot; marker-end=&quot;url(#ar)&quot;/>
+        <path d=&quot;M214 159 L248 208&quot; stroke=&quot;#83837E&quot; stroke-width=&quot;11&quot; stroke-linecap=&quot;round&quot; fill=&quot;none&quot;/>
+        <path class=&quot;fast&quot; d=&quot;M216 162 L246 205&quot; stroke=&quot;#C0442A&quot; stroke-width=&quot;3.4&quot; stroke-dasharray=&quot;10 8&quot; stroke-linecap=&quot;round&quot; fill=&quot;none&quot; marker-end=&quot;url(#ar)&quot;/>
+
+        <path d=&quot;M204 168 H300&quot; stroke=&quot;#C0392B&quot; stroke-width=&quot;1.8&quot; stroke-dasharray=&quot;6 4&quot; fill=&quot;none&quot;/>
+        <text x=&quot;198&quot; y=&quot;184&quot; font-size=&quot;15&quot; fill=&quot;#C0392B&quot; text-anchor=&quot;end&quot;>こう水ライン</text>
+        <text x=&quot;12&quot; y=&quot;202&quot; font-size=&quot;17&quot; fill=&quot;#4A3A22&quot; font-weight=&quot;600&quot;>しみこむ場所がない</text>
+        <text x=&quot;150&quot; y=&quot;229&quot; font-size=&quot;16&quot; fill=&quot;#4A3A22&quot;>下水道</text>
+        <text x=&quot;12&quot; y=&quot;250&quot; font-size=&quot;17&quot; fill=&quot;#993C1D&quot; font-weight=&quot;600&quot;>いちどに流れこむ</text>
+
+        <rect id=&quot;wNew&quot; x=&quot;244&quot; y=&quot;262&quot; width=&quot;52&quot; height=&quot;0&quot; fill=&quot;#3E7FC0&quot;/>
+        <g id=&quot;flood&quot; style=&quot;opacity:0&quot;>
+          <rect x=&quot;176&quot; y=&quot;146&quot; width=&quot;68&quot; height=&quot;8&quot; fill=&quot;#3E7FC0&quot;/>
+          <rect x=&quot;296&quot; y=&quot;146&quot; width=&quot;24&quot; height=&quot;8&quot; fill=&quot;#3E7FC0&quot;/>
+          <rect x=&quot;161&quot; y=&quot;115&quot; width=&quot;98&quot; height=&quot;29&quot; rx=&quot;7&quot; fill=&quot;#FCFBF8&quot; stroke=&quot;#C0392B&quot; stroke-width=&quot;1.5&quot;/>
+          <text x=&quot;210&quot; y=&quot;136&quot; font-size=&quot;18&quot; fill=&quot;#C0392B&quot; text-anchor=&quot;middle&quot; font-weight=&quot;600&quot;>あふれた!</text>
+        </g>
+        <path d=&quot;M244 150 V262 H296 V150&quot; fill=&quot;none&quot; stroke=&quot;#8A7A5E&quot; stroke-width=&quot;1.5&quot;/>
+        <text x=&quot;270&quot; y=&quot;143&quot; font-size=&quot;17&quot; fill=&quot;#0C447C&quot; text-anchor=&quot;middle&quot; font-weight=&quot;600&quot;>川</text>
+      </svg>
+    </div>
+    <ol>
+      <li id=&quot;b1&quot;><b>1</b>やねとほそう道路に雨がふる</li>
+      <li id=&quot;b2&quot;><b>2</b>しみこまずに下水道へ集まる</li>
+      <li id=&quot;b3&quot;><b>3</b>いっきに川へ流れこむ</li>
+    </ol>
+    <div class=&quot;meter&quot;><span>川の水</span><span class=&quot;bar&quot;><i id=&quot;bNew&quot;></i><u></u></span><span class=&quot;num&quot; id=&quot;pNew&quot;>0%</span></div>
+  </section>
+
+</div>
+
+<div class=&quot;ctrl&quot;>
+  <span class=&quot;seg&quot;>
+    <button id=&quot;ko&quot; class=&quot;on&quot;>小雨</button><button id=&quot;oo&quot;>大雨</button>
+  </span>
+  <button id=&quot;btn&quot;>雨をふらせる</button>
+  <span class=&quot;clock&quot;>ふりはじめてから <b id=&quot;mins&quot;>0分</b></span>
+</div>
+
+<script>
+(function(){
+  var raf=null, t0=0, mode='ko';
+  var M={
+    ko:{n:8,  w:1.3, dur:'1.5s', rO:2.2, mO:14, rN:9,  mN:66},
+    oo:{n:18, w:2.1, dur:'0.8s', rO:5,   mO:44, rN:22, mN:112}
+  };
+  var stepsA=[['a1',0.3],['a2',2.2],['a3',4.6]];
+  var stepsB=[['b1',0.3],['b2',1.4],['b3',2.6]];
+  var LIMIT=112, DANGER=100;
+
+  function drops(id){
+    var m=M[mode], g=document.getElementById(id), h='', gap=Math.round(300/m.n);
+    g.style.setProperty('--d',m.dur);
+    g.setAttribute('stroke-width',m.w);
+    for(var i=0;i<m.n;i++){
+      var x=12+i*gap;
+      h+='<line x1=&quot;'+x+'&quot; y1=&quot;0&quot; x2=&quot;'+(x-4)+'&quot; y2=&quot;12&quot; style=&quot;animation-delay:'+((i*137%1400)/1000).toFixed(2)+'s&quot;/>';
+    }
+    g.innerHTML=h;
+  }
+  function setW(id,h){
+    var r=document.getElementById(id);
+    r.setAttribute('y',262-h); r.setAttribute('height',h);
+  }
+  function show(pid,bid,h){
+    var p=Math.round(h/LIMIT*100), n=document.getElementById(pid);
+    n.textContent=p+'%';
+    n.classList.toggle('over',h>=DANGER);
+    document.getElementById(bid).style.width=p+'%';
+  }
+  function marks(list,s){
+    for(var i=0;i<list.length;i++){
+      document.getElementById(list[i][0]).classList.toggle('on',s>=list[i][1]);
+    }
+  }
+  function reset(){
+    cancelAnimationFrame(raf);
+    setW('wOld',0); setW('wNew',0);
+    show('pOld','bOld',0); show('pNew','bNew',0);
+    marks(stepsA,-1); marks(stepsB,-1);
+    document.getElementById('flood').style.opacity=0;
+    document.getElementById('mins').textContent='0分';
+    document.body.classList.remove('go');
+  }
+  function step(now){
+    var m=M[mode], s=(now-t0)/1000;
+    var hO=Math.min(m.mO,s*m.rO), hN=Math.min(m.mN,s*m.rN);
+    setW('wOld',hO); setW('wNew',hN);
+    show('pOld','bOld',hO); show('pNew','bNew',hN);
+    marks(stepsA,s); marks(stepsB,s);
+    document.getElementById('flood').style.opacity = hN>=DANGER ? 1 : 0;
+    document.getElementById('mins').textContent=Math.round(Math.min(s,8)*10)+'分';
+    if(s>=8) document.body.classList.remove('go');
+    if(s<11) raf=requestAnimationFrame(step);
+  }
+  function start(){
+    reset();
+    void document.body.offsetWidth;
+    document.body.classList.add('go');
+    t0=performance.now();
+    raf=requestAnimationFrame(step);
+    document.getElementById('btn').textContent='もういちど ふらせる';
+  }
+  function pick(id){
+    mode=id;
+    document.getElementById('ko').classList.toggle('on',id==='ko');
+    document.getElementById('oo').classList.toggle('on',id==='oo');
+    drops('rainA'); drops('rainB');
+    start();
+  }
+  document.getElementById('ko').addEventListener('click',function(){pick('ko');});
+  document.getElementById('oo').addEventListener('click',function(){pick('oo');});
+  document.getElementById('btn').addEventListener('click',start);
+
+  drops('rainA'); drops('rainB'); reset();
+})();
+</script>
+</body>
+</html>"></iframe>
+                <iframe class="refframe" data-r="1" title="台風ができるまで" srcdoc="<!DOCTYPE html>
+<html lang=&quot;ja&quot;>
+<head>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>台風ができるまで</title>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;>
+<link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin>
+<link href=&quot;https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&amp;display=swap&quot; rel=&quot;stylesheet&quot;>
+<style>
+  :root{
+    --panel:#123B52;
+    --line:rgba(255,255,255,.16);
+    --text:#E7F1F7;
+    --dim:#A9C6D6;
+    --sun:#FFD25A;
+    --sea:#3DBCC6;
+    --coral:#FF6F59;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    overflow:hidden;
+    background:
+      radial-gradient(1100px 620px at 50% -10%, #14486A 0%, rgba(20,72,106,0) 62%),
+      #07202F;
+    color:var(--text);
+    font-family:&quot;Zen Maru Gothic&quot;,&quot;Hiragino Maru Gothic ProN&quot;,&quot;ヒラギノ丸ゴ ProN W4&quot;,&quot;M PLUS Rounded 1c&quot;,&quot;Meiryo&quot;,sans-serif;
+    font-weight:500;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .app{
+    height:100dvh;
+    max-width:1440px;
+    margin:0 auto;
+    padding:12px 16px 14px;
+    display:grid;
+    grid-template-rows:auto minmax(0,1fr);
+    gap:10px;
+  }
+
+  /* ---- 見出し ---- */
+  .top{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+  h1{
+    margin:0;font-weight:900;
+    font-size:clamp(24px,3vw,38px);
+    letter-spacing:.05em;line-height:1.1;
+  }
+  .lead{margin:0;color:var(--dim);font-size:clamp(13px,1.4vw,17px)}
+
+  /* ---- 本体 2カラム ---- */
+  .main{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) clamp(245px,22vw,320px);
+    gap:14px;min-height:0;
+  }
+  .left{display:grid;grid-template-rows:minmax(0,1fr) auto auto;gap:10px;min-height:0}
+  .side{display:flex;flex-direction:column;gap:8px;min-height:0;overflow:auto}
+
+  /* ---- 画面 ---- */
+  .stage{min-height:0;display:grid;place-items:center;overflow:hidden}
+  .screen{
+    position:relative;
+    border-radius:16px;overflow:hidden;background:#0d3a52;
+    box-shadow:0 14px 34px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.14);
+  }
+  canvas{display:block;width:100%;height:100%}
+  .hud{
+    position:absolute;display:flex;align-items:center;gap:7px;
+    padding:.45em .9em;border-radius:999px;
+    background:rgba(6,28,42,.62);
+    font-size:clamp(12px,1.6vw,18px);font-weight:700;white-space:nowrap;
+  }
+  .hud-title{top:3.4%;left:2.4%}
+  .hud-title .no{
+    display:inline-grid;place-items:center;width:1.6em;height:1.6em;border-radius:50%;
+    background:var(--sun);color:#123;font-weight:900;font-size:.92em;
+  }
+  .hud-wind{top:3.4%;right:2.4%;opacity:0;transition:opacity .3s}
+  .hud-wind b{font-size:1.2em;font-weight:900;color:#fff}
+  .hud-wind.on{opacity:1}
+  .hud-wind.strong{background:rgba(255,111,89,.92)}
+  .hud-wind.strong b{color:#231}
+
+  /* ---- そうさバー ---- */
+  .bar{display:flex;align-items:center;gap:12px}
+  .play{
+    flex:0 0 auto;width:58px;height:58px;border:none;border-radius:50%;
+    background:var(--sun);color:#0A2B3C;font-size:25px;line-height:1;cursor:pointer;
+    display:grid;place-items:center;box-shadow:0 5px 0 #C79B2F;
+    transition:transform .08s ease, box-shadow .08s ease;
+  }
+  .play:active{transform:translateY(3px);box-shadow:0 2px 0 #C79B2F}
+  .play:focus-visible{outline:3px solid #fff;outline-offset:3px}
+  .timeline{position:relative;flex:1 1 auto;height:30px;display:flex;align-items:center}
+  .track{position:absolute;left:0;right:0;height:9px;border-radius:999px;background:rgba(255,255,255,.16)}
+  .fill{position:absolute;left:0;height:9px;border-radius:999px;background:linear-gradient(90deg,var(--sea),var(--sun));width:0}
+  .tick{position:absolute;width:7px;height:7px;border-radius:50%;background:#08293B;transform:translateX(-3.5px);pointer-events:none}
+  .knob{position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;border:4px solid var(--sun);transform:translateX(-11px);box-shadow:0 2px 8px rgba(0,0,0,.4);pointer-events:none}
+  .timeline input{position:absolute;left:0;width:100%;height:30px;margin:0;opacity:0;cursor:pointer}
+  .timeline:focus-within .knob{outline:3px solid #fff;outline-offset:2px}
+  .again{
+    flex:0 0 auto;border:2px solid var(--line);background:transparent;color:var(--text);
+    font-family:inherit;font-weight:700;font-size:17px;padding:9px 15px;border-radius:13px;cursor:pointer;
+  }
+  .again:hover{border-color:rgba(255,255,255,.5)}
+  .again:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+
+  /* ---- せつめい ---- */
+  .caption{
+    height:clamp(126px,17.5vh,190px);
+    padding:14px 18px;background:var(--panel);border-radius:14px;
+    border-left:7px solid var(--sun);overflow:auto;
+  }
+  .caption h2{margin:0 0 6px;font-size:clamp(18px,2vw,26px);font-weight:900;letter-spacing:.02em}
+  .caption p{margin:0;font-size:clamp(15px,1.55vw,19px);line-height:1.8;max-width:64ch}
+  .caption rt{font-size:.5em;font-weight:500;color:var(--sun)}
+  .caption .mark{background:linear-gradient(transparent 62%, rgba(255,210,90,.42) 62%);padding:0 2px}
+
+  /* ---- ばめん一覧（右） ---- */
+  .steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;flex:0 0 auto}
+  .steps li{display:flex}
+  .steps button{
+    width:100%;display:flex;align-items:center;gap:9px;
+    padding:8px 10px;border:2px solid var(--line);border-radius:12px;
+    background:rgba(255,255,255,.04);color:var(--dim);
+    font-family:inherit;font-weight:700;font-size:clamp(13.5px,1.25vw,17px);
+    line-height:1.3;text-align:left;cursor:pointer;
+  }
+  .steps button .n{
+    flex:0 0 auto;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+    background:rgba(255,255,255,.14);color:var(--text);font-size:14px;font-weight:900;
+  }
+  .steps button[aria-current=&quot;true&quot;]{background:rgba(255,210,90,.15);border-color:var(--sun);color:#fff}
+  .steps button[aria-current=&quot;true&quot;] .n{background:var(--sun);color:#0A2B3C}
+  .steps button:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+
+  .hint{margin:0;color:#7FA2B6;font-size:13.5px;line-height:1.5}
+
+  /* ---- せまい画面 ---- */
+  @media (max-width:860px){
+    .main{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto}
+    .side{flex-direction:row;align-items:center;gap:6px;overflow-x:auto;overflow-y:hidden;flex:0 0 auto}
+    .steps{flex-direction:row;flex-wrap:nowrap}
+    .steps button{white-space:nowrap}
+    .steps button span:last-child{display:none}
+    .steps button .n{width:26px;height:26px}
+    .hint{display:none}
+    .caption{height:clamp(110px,22vh,168px)}
+    .play{width:52px;height:52px;font-size:22px}
+    .again{padding:8px 12px;font-size:15px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class=&quot;app&quot;>
+
+  <header class=&quot;top&quot;>
+    <h1>台風ができるまで</h1>
+    <p class=&quot;lead&quot;>南の海で生まれて、日本にやってくるまでの6つの場面</p>
+  </header>
+
+  <div class=&quot;main&quot;>
+    <div class=&quot;left&quot;>
+      <div class=&quot;stage&quot; id=&quot;stage&quot;>
+        <div class=&quot;screen&quot; id=&quot;screen&quot;>
+          <canvas id=&quot;cv&quot; role=&quot;img&quot; aria-label=&quot;台風ができるまでのアニメーション&quot;></canvas>
+          <div class=&quot;hud hud-title&quot;><span class=&quot;no&quot; id=&quot;hudNo&quot;>1</span><span id=&quot;hudText&quot;>南の海があたためられる</span></div>
+          <div class=&quot;hud hud-wind&quot; id=&quot;hudWind&quot;>風の速さ 秒速 <b id=&quot;windVal&quot;>0</b> m</div>
+        </div>
+      </div>
+
+      <div class=&quot;bar&quot;>
+        <button class=&quot;play&quot; id=&quot;play&quot; aria-label=&quot;再生する&quot;>▶</button>
+        <div class=&quot;timeline&quot;>
+          <div class=&quot;track&quot;></div>
+          <div class=&quot;fill&quot; id=&quot;fill&quot;></div>
+          <div class=&quot;tick&quot; style=&quot;left:16.666%&quot;></div>
+          <div class=&quot;tick&quot; style=&quot;left:33.333%&quot;></div>
+          <div class=&quot;tick&quot; style=&quot;left:50%&quot;></div>
+          <div class=&quot;tick&quot; style=&quot;left:66.666%&quot;></div>
+          <div class=&quot;tick&quot; style=&quot;left:83.333%&quot;></div>
+          <div class=&quot;knob&quot; id=&quot;knob&quot;></div>
+          <input id=&quot;seek&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;48&quot; step=&quot;0.05&quot; value=&quot;0&quot; aria-label=&quot;場面を選ぶ&quot;>
+        </div>
+        <button class=&quot;again&quot; id=&quot;reset&quot;>はじめから</button>
+      </div>
+
+      <section class=&quot;caption&quot;>
+        <h2 id=&quot;capTitle&quot;></h2>
+        <p id=&quot;capBody&quot;></p>
+      </section>
+    </div>
+
+    <div class=&quot;side&quot;>
+      <ol class=&quot;steps&quot; id=&quot;steps&quot;></ol>
+      <p class=&quot;hint&quot;>スペース＝再生／停止、←→＝場面の移動</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+&quot;use strict&quot;;
+
+/* ============ 場面のデータ ============ */
+var STAGE_LEN = 8;
+var TOTAL = 48;
+var STAGES = [
+  { short:&quot;南の海があたたまる&quot;,
+    hud:&quot;南の海があたためられる&quot;,
+    title:&quot;① 南の海があたためられる&quot;,
+    body:'夏の南の海は、太陽に強くてらされて、海面の温度が<span class=&quot;mark&quot;>27℃いじょう</span>になります。あたたかい海からは、水がどんどん<ruby>蒸発<rt>じょうはつ</rt></ruby>して、目に見えない<b>水じょう気</b>になって空へのぼっていきます。'
+  },
+  { short:&quot;水じょう気が雲になる&quot;,
+    hud:&quot;水じょう気が雲になる&quot;,
+    title:&quot;② 水じょう気が雲になる&quot;,
+    body:'上空は空気が冷たいので、のぼってきた水じょう気は冷やされて、<span class=&quot;mark&quot;>小さな水のつぶ</span>にもどります。それが集まったものが雲です。雲のそこの高さがそろうのは、その高さで水のつぶになるからです。雲ができるときに出る熱が、空気をさらに上へおし上げます。'
+  },
+  { short:&quot;せきらん雲が集まる&quot;,
+    hud:&quot;せきらん雲が集まる&quot;,
+    title:&quot;③ せきらん雲が集まって、かたまりになる&quot;,
+    body:'強い上しょう気流で、雲はもくもくと高く育ちます（<ruby>積乱雲<rt>せきらんうん</rt></ruby>）。中心に空気がすいこまれ、たくさんの積乱雲が<span class=&quot;mark&quot;>ひとつの大きなかたまり</span>になっていきます。'
+  },
+  { short:&quot;うずをまきはじめる&quot;,
+    hud:&quot;うずをまきはじめる&quot;,
+    title:&quot;④ 風がうずをまきはじめる（熱帯低気圧）&quot;,
+    body:'ここからは<b>上から見たようす</b>です。地球が回っている（<ruby>自転<rt>じてん</rt></ruby>）ため、中心にすいこまれる風はまっすぐには進まず、<span class=&quot;mark&quot;>反時計回り</span>にうずをまきます。こうしてできた雲のうずが<ruby>熱帯低気圧<rt>ねったいていきあつ</rt></ruby>です。'
+  },
+  { short:&quot;台風になる・台風の目&quot;,
+    hud:&quot;台風になる／台風の目&quot;,
+    title:&quot;⑤ 風が強くなって「台風」になる&quot;,
+    body:'海から水じょう気をもらいつづけて、うずはどんどん強くなります。中心ふきんの風の速さが<span class=&quot;mark&quot;>秒速およそ17mいじょう</span>になると「台風」とよばれます。まん中には、風のよわい<b>台風の目</b>ができます。'
+  },
+  { short:&quot;日本へ北上・弱まる&quot;,
+    hud:&quot;日本へ北上、やがて弱まる&quot;,
+    title:&quot;⑥ 日本へ北上し、そして弱まる&quot;,
+    body:'台風は上空の風に流されて北へ動き、日本に近づきます。<ruby>上陸<rt>じょうりく</rt></ruby>したり、冷たい海の上に出たりすると、力のもとになる<span class=&quot;mark&quot;>水じょう気をもらえなくなり</span>、やがて弱まります。'
+  }
+];
+
+/* ============ Canvas ============ */
+var W = 960, H = 540, SEA_Y = 372;
+var cv = document.getElementById('cv');
+var ctx = cv.getContext('2d');
+var stageEl = document.getElementById('stage');
+var screenEl = document.getElementById('screen');
+var FONT = '&quot;Zen Maru Gothic&quot;,&quot;Hiragino Maru Gothic ProN&quot;,&quot;M PLUS Rounded 1c&quot;,sans-serif';
+
+/* 画面の高さに合わせて 16:9 のサイズを計算する（スクロールなしで収める） */
+var lastW = 0, lastH = 0;
+function resize(){
+  var box = stageEl.getBoundingClientRect();
+  var bw = Math.max(160, box.width), bh = Math.max(90, box.height);
+  var w = Math.min(bw, bh * (W/H));
+  var h = w * (H/W);
+  w = Math.floor(w); h = Math.floor(h);
+  if(Math.abs(w-lastW) > 1 || Math.abs(h-lastH) > 1){
+    lastW = w; lastH = h;
+    screenEl.style.width = w + 'px';
+    screenEl.style.height = h + 'px';
+  }
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var cw = Math.max(1, Math.round(w * dpr));
+  if(cv.width !== cw){
+    cv.width = cw;
+    cv.height = Math.max(1, Math.round(h * dpr));
+  }
+  ctx.setTransform(cv.width / W, 0, 0, cv.width / W, 0, 0);
+}
+window.addEventListener('resize', resize);
+window.addEventListener('orientationchange', resize);
+if(window.ResizeObserver){ new ResizeObserver(resize).observe(stageEl); }
+
+/* ---- 小道具 ---- */
+var seed = 20240901;
+function rnd(){ seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
+function lerp(a,b,u){ return a + (b-a)*u; }
+function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+function smooth(u){ u = clamp(u,0,1); return u*u*(3-2*u); }
+function curve(pts, x){
+  if(x <= pts[0][0]) return pts[0][1];
+  for(var i=0;i<pts.length-1;i++){
+    if(x <= pts[i+1][0]){
+      var u = (x - pts[i][0]) / (pts[i+1][0] - pts[i][0]);
+      return lerp(pts[i][1], pts[i+1][1], smooth(u));
+    }
+  }
+  return pts[pts.length-1][1];
+}
+function pill(x,y,text,bg,fg,size){
+  ctx.font = '700 ' + size + 'px ' + FONT;
+  var w = ctx.measureText(text).width + size*1.5;
+  var h = size*1.95;
+  ctx.fillStyle = bg;
+  ctx.beginPath();
+  if(ctx.roundRect){ ctx.roundRect(x, y, w, h, h/2); } else { ctx.rect(x,y,w,h); }
+  ctx.fill();
+  ctx.fillStyle = fg;
+  ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+  ctx.fillText(text, x + size*0.75, y + h/2 + 1);
+  return w;
+}
+
+var vapor = [];
+for(var i=0;i<130;i++){
+  vapor.push({ x: rnd()*W, ph: rnd(), sp: 0.055 + rnd()*0.07, r: 1.8 + rnd()*3.2, sw: 4 + rnd()*10 });
+}
+var COND_Y = 264;                 // 雲ができはじめる高さ
+var GX = [215, 470, 735];         // 集まっていく3か所
+var cols = [];
+for(var i=0;i<15;i++){
+  cols.push({
+    x0: 44 + i*60 + (rnd()*2-1)*18,
+    g: i % 3,
+    t0: 7.3 + rnd()*5.8,          // 立ちのぼりはじめる時こく（バラバラ）
+    rise: 1.1 + rnd()*0.9,
+    dur: 4.2 + rnd()*3.0,
+    hMax: 104 + rnd()*46,
+    wMax: 23 + rnd()*14,
+    ph: rnd()*6.283,
+    sd: rnd()*100
+  });
+}
+var ARMS = 5, TWIST = 3.1;
+var puffs = [];
+for(var i=0;i<560;i++){
+  var s = Math.pow(rnd(), 0.75);
+  var a0 = rnd()*Math.PI*2, r0 = 0.15 + rnd()*0.95;
+  puffs.push({
+    s:s, arm: i % ARMS, jr: rnd()*2-1, ja: rnd()*2-1,
+    size: 5 + rnd()*11, dx: Math.cos(a0)*r0, dy: Math.sin(a0)*r0
+  });
+}
+var glints = [];
+for(var i=0;i<70;i++){ glints.push({ x: rnd()*W, y: rnd()*H, w: 12+rnd()*26, ph: rnd()*6.28 }); }
+
+/* ============ 横から見たようす ============ */
+function drawSide(alpha, t){
+  if(alpha <= 0.004) return;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  var sky = ctx.createLinearGradient(0,0,0,SEA_Y);
+  sky.addColorStop(0,'#2E8FC4'); sky.addColorStop(0.62,'#8CCBE7'); sky.addColorStop(1,'#DCF1F8');
+  ctx.fillStyle = sky; ctx.fillRect(0,0,W,SEA_Y+2);
+
+  var sx=140, sy=92;
+  var glow = ctx.createRadialGradient(sx,sy,12,sx,sy,150);
+  glow.addColorStop(0,'rgba(255,228,130,.95)');
+  glow.addColorStop(.4,'rgba(255,214,96,.30)');
+  glow.addColorStop(1,'rgba(255,214,96,0)');
+  ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(sx,sy,150,0,6.2832); ctx.fill();
+  ctx.save(); ctx.translate(sx,sy); ctx.rotate(t*0.13);
+  ctx.strokeStyle='rgba(255,226,130,.85)'; ctx.lineWidth=6; ctx.lineCap='round';
+  for(var i=0;i<12;i++){ ctx.rotate(Math.PI/6); ctx.beginPath(); ctx.moveTo(54,0); ctx.lineTo(74,0); ctx.stroke(); }
+  ctx.restore();
+  ctx.fillStyle='#FFD25A'; ctx.beginPath(); ctx.arc(sx,sy,41,0,6.2832); ctx.fill();
+
+  var sea = ctx.createLinearGradient(0,SEA_Y,0,H);
+  sea.addColorStop(0,'#3FBFC9'); sea.addColorStop(1,'#0C4763');
+  ctx.fillStyle = sea; ctx.fillRect(0,SEA_Y,W,H-SEA_Y);
+  ctx.strokeStyle='rgba(255,255,255,.30)'; ctx.lineWidth=3; ctx.lineCap='round';
+  for(var k=0;k<5;k++){
+    var yy = SEA_Y + 16 + k*32;
+    ctx.beginPath();
+    for(var x=-20;x<=W+20;x+=12){
+      var y = yy + Math.sin((x*0.018) + t*1.1 + k*1.7)*5;
+      if(x<=-20) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.globalAlpha = alpha * (0.34 - k*0.05);
+    ctx.stroke();
+  }
+  ctx.globalAlpha = alpha;
+
+  var heat = curve([[0.4,0],[2.2,1],[7.5,.9],[11,0]], t);
+  if(heat > 0.01){
+    ctx.strokeStyle = 'rgba(255,176,96,' + (0.40*heat) + ')';
+    ctx.lineWidth = 3.5; ctx.lineCap='round';
+    for(var i=0;i<11;i++){
+      var bx = 60 + i*84;
+      ctx.beginPath();
+      for(var yy2=0; yy2<=54; yy2+=6){
+        var xx = bx + Math.sin((yy2*0.14) + t*3 + i)*7;
+        if(yy2===0) ctx.moveTo(xx, SEA_Y-2); else ctx.lineTo(xx, SEA_Y-2-yy2);
+      }
+      ctx.stroke();
+    }
+  }
+
+  var rise = curve([[0.3,0],[2,44],[8,96],[14,112],[24,112]], t);
+  var vAlpha = curve([[0.3,0],[2,1],[20,1],[24,.5]], t);
+  if(rise > 1){
+    for(var i=0;i<vapor.length;i++){
+      var p = vapor[i];
+      var f = ((t*p.sp + p.ph) % 1);
+      var y2 = SEA_Y - 6 - f*rise;
+      var x2 = p.x + Math.sin(t*1.3 + p.ph*7)*p.sw;
+      var a = vAlpha * (1 - f) * 0.85;
+      if(a <= 0) continue;
+      ctx.globalAlpha = alpha * a;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath(); ctx.arc(x2, y2, p.r, 0, 6.2832); ctx.fill();
+    }
+    ctx.globalAlpha = alpha;
+  }
+
+  drawClouds(alpha, t);
+
+  var arr = curve([[16.5,0],[19,1],[22.6,1],[23.8,.5]], t);
+  if(arr > 0.02){
+    ctx.globalAlpha = alpha*arr;
+    windArrow(70, SEA_Y-34, 190, 1);
+    windArrow(890, SEA_Y-34, 190, -1);
+    ctx.globalAlpha = alpha;
+  }
+
+  var tl = curve([[1,0],[2.4,1],[16,1],[18,0]], t);
+  if(tl>0.02){
+    ctx.globalAlpha = alpha*tl;
+    pill(620, SEA_Y+22, '海面の温度 27℃いじょう', 'rgba(255,111,89,.92)', '#fff', 19);
+    ctx.globalAlpha = alpha;
+  }
+  ctx.globalAlpha = alpha*0.92;
+  pill(20, H-46, '横から見たようす', 'rgba(6,32,46,.6)', '#DCEFF7', 17);
+  ctx.restore();
+}
+
+/* 細い上しょう気流 → 小さな雲 → 大きなかたまり */
+function drawClouds(alpha, t){
+  var m1 = curve([[14.2,0],[19,1]], t);     // 3か所に集まる
+  var m2 = curve([[17.6,0],[22.4,1]], t);   // ひとつのかたまりになる（22.4秒で完成）
+  var merged = [], soft = [], plumes = [];
+  var topY = COND_Y;
+
+  for(var i=0;i<cols.length;i++){
+    var c = cols[i];
+    var age = t - c.t0;
+    if(age <= 0) continue;
+    var rp = smooth(age / c.rise);
+    var fat = clamp((age - c.rise*0.75) / c.dur, 0, 1);
+    var x = lerp(c.x0, GX[c.g], m1);
+    x = lerp(x, 470, m2*0.70);
+
+    // のぼっていく細い流れ
+    var pTop = lerp(SEA_Y - 6, COND_Y + 8, rp);
+    var pl = [];
+    for(var k=0;k<=12;k++){
+      var u = k/12;
+      var y = lerp(SEA_Y - 4, pTop, u);
+      var r = (3.3 - u*0.9) * (0.8 + 0.55*fat);
+      var ox = Math.sin(u*4.2 + c.ph + t*0.9) * 10 * (1 - 0.55*fat);
+      pl.push([x+ox, y, r]);
+    }
+    plumes.push([pl, alpha * 0.5 * (0.35 + 0.65*rp) * (1 - 0.35*fat)]);
+
+    // 雲（雲のそこは同じ高さにそろう）
+    if(fat > 0.002){
+      var e = smooth(fat);
+      var h = c.hMax * (0.12 + 0.88*e) * (1 + 0.58*m2);
+      var w = c.wMax * (0.18 + 0.82*e) * (1 + 0.62*m2);
+      var cp = [], n = 13;
+      for(var k=0;k<=n;k++){
+        var u = k/n;
+        var r = w * (0.42 + 0.62*Math.sin(Math.PI*(0.10 + u*0.88)));
+        var ox = Math.sin(u*6.4 + c.sd) * w * 0.26;
+        cp.push([x+ox, COND_Y - r*0.55 - u*h, r]);
+      }
+      if(COND_Y - h < topY) topY = COND_Y - h;
+      var a = clamp(0.15 + fat*2.6, 0, 1);
+      if(a >= 0.995) merged = merged.concat(cp);
+      else soft.push([cp, alpha*a]);
+    }
+  }
+
+  // かなとこ（上のひろがり）
+  if(m2 > 0.45 &amp;&amp; merged.length){
+    var sp = (m2 - 0.45)/0.55, ay = topY + 16;
+    for(var j=-5;j<=5;j++){
+      var rr = (31 - Math.abs(j)*3.6) * sp;
+      if(rr > 2) merged.push([470 + j*38*sp, ay + Math.abs(j)*3.5, rr]);
+    }
+  }
+
+  for(var i=0;i<plumes.length;i++) puffPath(plumes[i][0], plumes[i][1], topY, false);
+  for(var i=0;i<soft.length;i++)   puffPath(soft[i][0],   soft[i][1],   topY, false);
+  puffPath(merged, alpha, topY, true);
+}
+
+function puffPath(pts, a, topY, shadow){
+  if(!pts.length || a <= 0.01) return;
+  ctx.save();
+  if(shadow){
+    ctx.globalAlpha = a * 0.20;
+    ctx.fillStyle = 'rgba(10,50,75,1)';
+    ctx.beginPath();
+    for(var i=0;i<pts.length;i++){
+      ctx.moveTo(pts[i][0]+7+pts[i][2], pts[i][1]+11);
+      ctx.arc(pts[i][0]+7, pts[i][1]+11, pts[i][2], 0, 6.2832);
+    }
+    ctx.fill();
+  }
+  var g = ctx.createLinearGradient(0, topY-24, 0, COND_Y+40);
+  g.addColorStop(0,'#FFFFFF'); g.addColorStop(0.58,'#F1F8FC'); g.addColorStop(1,'#AAC5D5');
+  ctx.globalAlpha = a;
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  for(var i=0;i<pts.length;i++){
+    ctx.moveTo(pts[i][0]+pts[i][2], pts[i][1]);
+    ctx.arc(pts[i][0], pts[i][1], pts[i][2], 0, 6.2832);
+  }
+  ctx.fill();
+  ctx.restore();
+}
+
+function windArrow(x, y, len, dir){
+  ctx.strokeStyle = 'rgba(255,255,255,.9)';
+  ctx.lineWidth = 7; ctx.lineCap='round'; ctx.lineJoin='round';
+  ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + len*dir, y); ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x + len*dir, y);
+  ctx.lineTo(x + (len-24)*dir, y-13);
+  ctx.moveTo(x + len*dir, y);
+  ctx.lineTo(x + (len-24)*dir, y+13);
+  ctx.stroke();
+}
+
+/* ============ 上から見たようす ============ */
+function drawTop(alpha, t){
+  if(alpha <= 0.004) return;
+  ctx.save();
+  ctx.globalAlpha = alpha;
+
+  var g = ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,'#12617F'); g.addColorStop(1,'#062E45');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(255,255,255,.13)'; ctx.lineWidth=3; ctx.lineCap='round';
+  for(var i=0;i<glints.length;i++){
+    var gl = glints[i];
+    var x = gl.x + Math.sin(t*0.5 + gl.ph)*6;
+    ctx.beginPath(); ctx.moveTo(x, gl.y); ctx.lineTo(x+gl.w, gl.y); ctx.stroke();
+  }
+
+  var land = curve([[38.5,0],[41,1]], t);
+  if(land > 0.01) drawLand(alpha*land);
+
+  var cx = curve([[24,380],[40,380],[48,690]], t);
+  var cy = curve([[24,302],[40,296],[48,178]], t);
+  var intensity = curve([[24,.18],[29,.45],[33,.72],[38,1],[43.5,1],[46,.72],[48,.34]], t);
+  var eye = curve([[31,0],[35,.55],[38,1],[44,1],[46,.45],[48,.1]], t);
+  var organize = curve([[24,0],[27,.35],[32,.9],[35,1]], t);
+  var radius = 90 + intensity*122;
+  var eyeR = (10 + eye*34) * (0.5 + intensity*0.5);
+  var rot = spinPhase(t);
+
+  drawStorm(cx, cy, rot, eyeR, radius, organize, intensity, alpha);
+
+  if(organize > 0.15){
+    ctx.globalAlpha = alpha * clamp(organize,0,1) * 0.9;
+    for(var a=0;a<3;a++){ spinArrow(cx, cy, radius*1.16, rot + a*2.094); }
+    ctx.globalAlpha = alpha;
+  }
+
+  compass(alpha);
+  ctx.globalAlpha = alpha*0.92;
+  pill(20, H-46, '上から見たようす', 'rgba(6,32,46,.6)', '#DCEFF7', 17);
+  ctx.restore();
+}
+
+var SPIN = [[24,.20],[32,.55],[38,1.05],[44,1.0],[48,.45]];
+function spinPhase(t){
+  var steps = 64, dt = t/steps, ph = 0;
+  for(var i=0;i<steps;i++){ ph += curve(SPIN, dt*i) * dt; }
+  return ph;
+}
+
+function drawStorm(cx, cy, rot, eyeR, radius, organize, intensity, alpha){
+  var pts = [];
+  for(var i=0;i<puffs.length;i++){
+    var p = puffs[i];
+    var r = eyeR + 10 + p.s*(radius - eyeR - 10) + p.jr*13;
+    var ang = p.arm*(6.2832/ARMS) + p.s*TWIST*(0.55+0.45*organize) + rot + p.ja*0.30;
+    var sx = cx + r*Math.cos(ang);
+    var sy = cy - r*Math.sin(ang);
+    var da = rot*0.35;
+    var ddx = p.dx*Math.cos(da) - p.dy*Math.sin(da);
+    var ddy = p.dx*Math.sin(da) + p.dy*Math.cos(da);
+    var dx = cx + ddx*radius*0.95;
+    var dy = cy + ddy*radius*0.95;
+    var x = lerp(dx, sx, organize), y = lerp(dy, sy, organize);
+    var size = p.size * (0.55 + 0.75*p.s) * (0.6 + 0.5*intensity);
+    pts.push([x, y, size]);
+  }
+
+  ctx.save();
+  ctx.globalAlpha = alpha * 0.30 * (0.4+0.6*intensity);
+  ctx.fillStyle = 'rgba(4,26,42,1)';
+  ctx.beginPath();
+  for(var i=0;i<pts.length;i++){ ctx.moveTo(pts[i][0]+8+pts[i][2], pts[i][1]+12); ctx.arc(pts[i][0]+8, pts[i][1]+12, pts[i][2], 0, 6.2832); }
+  ctx.fill();
+  ctx.restore();
+
+  var cg = ctx.createRadialGradient(cx, cy, eyeR, cx, cy, radius*1.05);
+  cg.addColorStop(0,'#FFFFFF'); cg.addColorStop(0.45,'#F2F9FC'); cg.addColorStop(1,'#BFD6E2');
+  ctx.save();
+  ctx.globalAlpha = alpha * (0.45 + 0.55*intensity);
+  ctx.fillStyle = cg;
+  ctx.beginPath();
+  for(var i=0;i<pts.length;i++){ ctx.moveTo(pts[i][0]+pts[i][2], pts[i][1]); ctx.arc(pts[i][0], pts[i][1], pts[i][2], 0, 6.2832); }
+  ctx.fill();
+  ctx.restore();
+
+  if(eyeR > 13 &amp;&amp; organize > 0.6){
+    var ea = clamp((eyeR-13)/16, 0, 1) * alpha;
+    ctx.save();
+    ctx.globalAlpha = ea*0.9;
+    var eg = ctx.createRadialGradient(cx, cy, 0, cx, cy, eyeR);
+    eg.addColorStop(0,'#0B4A66'); eg.addColorStop(1,'rgba(11,74,102,0)');
+    ctx.fillStyle = eg;
+    ctx.beginPath(); ctx.arc(cx, cy, eyeR, 0, 6.2832); ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,.85)'; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.arc(cx, cy, eyeR*0.92, 0, 6.2832); ctx.stroke();
+    ctx.restore();
+
+    if(ea > 0.55){
+      ctx.save();
+      ctx.globalAlpha = (ea-0.55)/0.45;
+      ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(cx+eyeR*0.7, cy-eyeR*0.7); ctx.lineTo(cx+eyeR+56, cy-eyeR-42); ctx.stroke();
+      pill(cx+eyeR+56, cy-eyeR-62, '台風の目', 'rgba(255,255,255,.94)', '#0B3A52', 18);
+      ctx.restore();
+    }
+  }
+}
+
+function spinArrow(cx, cy, r, a0){
+  var span = 0.85;
+  ctx.strokeStyle = 'rgba(190,240,255,.85)';
+  ctx.lineWidth = 6; ctx.lineCap='round';
+  ctx.beginPath();
+  for(var i=0;i<=16;i++){
+    var a = a0 + span*(i/16);
+    var x = cx + r*Math.cos(a), y = cy - r*Math.sin(a);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  var ae = a0 + span;
+  var ex = cx + r*Math.cos(ae), ey = cy - r*Math.sin(ae);
+  var tx = -Math.sin(ae), ty = -Math.cos(ae);
+  ctx.beginPath();
+  ctx.moveTo(ex, ey);
+  ctx.lineTo(ex - tx*20 + ty*10, ey - ty*20 - tx*10);
+  ctx.moveTo(ex, ey);
+  ctx.lineTo(ex - tx*20 - ty*10, ey - ty*20 + tx*10);
+  ctx.stroke();
+}
+
+function drawLand(a){
+  ctx.save();
+  ctx.globalAlpha = a;
+  ctx.beginPath();
+  ctx.moveTo(960, 0);
+  ctx.lineTo(700, 0);
+  ctx.bezierCurveTo(660, 70, 720, 120, 770, 165);
+  ctx.bezierCurveTo(820, 205, 880, 235, 960, 250);
+  ctx.closePath();
+  ctx.fillStyle = '#6FAE74'; ctx.fill();
+  ctx.strokeStyle = '#E9DEB0'; ctx.lineWidth = 5; ctx.stroke();
+  ctx.beginPath(); ctx.ellipse(640, 200, 34, 18, -0.5, 0, 6.2832);
+  ctx.fillStyle = '#6FAE74'; ctx.fill(); ctx.stroke();
+  ctx.font = '900 30px ' + FONT;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.lineWidth = 6; ctx.strokeStyle = 'rgba(255,255,255,.85)';
+  ctx.strokeText('日本', 870, 110);
+  ctx.fillStyle = '#20553A'; ctx.fillText('日本', 870, 110);
+  ctx.restore();
+}
+
+function compass(alpha){
+  ctx.save();
+  ctx.globalAlpha = alpha*0.85;
+  var x=58, y=64;
+  ctx.fillStyle='rgba(6,32,46,.55)';
+  ctx.beginPath(); ctx.arc(x,y,34,0,6.2832); ctx.fill();
+  ctx.fillStyle='#FFD25A';
+  ctx.beginPath(); ctx.moveTo(x, y-22); ctx.lineTo(x-9, y+2); ctx.lineTo(x+9, y+2); ctx.closePath(); ctx.fill();
+  ctx.fillStyle='#EAF6FB'; ctx.font='900 16px '+FONT;
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('北', x, y+16);
+  ctx.restore();
+}
+
+function draw(t){
+  ctx.clearRect(0,0,W,H);
+  var f = smooth((t - 23.6)/1.0);
+  drawSide(1-f, t);
+  drawTop(f, t);
+}
+
+/* ============ そうさ ============ */
+var t = 0, playing = false, last = 0, curStage = -1;
+var playBtn = document.getElementById('play');
+var seek = document.getElementById('seek');
+var fill = document.getElementById('fill');
+var knob = document.getElementById('knob');
+var capTitle = document.getElementById('capTitle');
+var capBody = document.getElementById('capBody');
+var hudNo = document.getElementById('hudNo');
+var hudText = document.getElementById('hudText');
+var hudWind = document.getElementById('hudWind');
+var windVal = document.getElementById('windVal');
+var stepsEl = document.getElementById('steps');
+
+for(var i=0;i<STAGES.length;i++){
+  (function(idx){
+    var li = document.createElement('li');
+    var b = document.createElement('button');
+    b.innerHTML = '<span class=&quot;n&quot;>' + (idx+1) + '</span><span>' + STAGES[idx].short + '</span>';
+    b.addEventListener('click', function(){ t = idx*STAGE_LEN + 0.01; setPlaying(true); });
+    li.appendChild(b); stepsEl.appendChild(li);
+  })(i);
+}
+var stepBtns = stepsEl.querySelectorAll('button');
+
+function setPlaying(v){
+  playing = v;
+  playBtn.textContent = v ? '❚❚' : '▶';
+  playBtn.setAttribute('aria-label', v ? '一時停止する' : '再生する');
+}
+playBtn.addEventListener('click', function(){
+  if(!playing &amp;&amp; t >= TOTAL - 0.05) t = 0;
+  setPlaying(!playing);
+});
+document.getElementById('reset').addEventListener('click', function(){ t = 0; setPlaying(false); });
+seek.addEventListener('input', function(){ t = parseFloat(seek.value); setPlaying(false); });
+document.addEventListener('keydown', function(e){
+  if(e.target.tagName === 'INPUT' &amp;&amp; e.key !== ' ') return;
+  if(e.key === ' '){ e.preventDefault(); if(!playing &amp;&amp; t>=TOTAL-0.05) t=0; setPlaying(!playing); }
+  if(e.key === 'ArrowRight'){ e.preventDefault(); t = Math.min(TOTAL-0.01, (Math.floor(t/STAGE_LEN)+1)*STAGE_LEN + 0.01); }
+  if(e.key === 'ArrowLeft'){ e.preventDefault(); t = Math.max(0, (Math.ceil(t/STAGE_LEN)-1)*STAGE_LEN + 0.01); }
+});
+
+function updateUI(){
+  var pct = (t/TOTAL)*100;
+  fill.style.width = pct + '%';
+  knob.style.left = pct + '%';
+  if(document.activeElement !== seek) seek.value = t;
+
+  var s = Math.min(STAGES.length-1, Math.floor(t/STAGE_LEN));
+  if(s !== curStage){
+    curStage = s;
+    capTitle.innerHTML = STAGES[s].title;
+    capBody.innerHTML = STAGES[s].body;
+    hudNo.textContent = s+1;
+    hudText.innerHTML = STAGES[s].hud;
+    for(var i=0;i<stepBtns.length;i++){
+      stepBtns[i].setAttribute('aria-current', i===s ? 'true' : 'false');
+    }
+  }
+  if(t >= 23.5){
+    var w = curve([[23.5,9],[29,13],[32,17],[36,29],[40,42],[44,44],[46,30],[48,16]], t);
+    hudWind.classList.add('on');
+    windVal.textContent = Math.round(w);
+    hudWind.classList.toggle('strong', w >= 17);
+  } else {
+    hudWind.classList.remove('on','strong');
+  }
+}
+
+function loop(now){
+  if(!last) last = now;
+  var dt = Math.min(0.06, (now - last)/1000);
+  last = now;
+  if(playing){
+    t += dt;
+    if(t >= TOTAL){ t = TOTAL; setPlaying(false); }
+  }
+  draw(t);
+  updateUI();
+  requestAnimationFrame(loop);
+}
+
+resize();
+updateUI();
+requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>"></iframe>
+                <iframe class="refframe" data-r="2" title="岩渕水門のはたらき" srcdoc="<!DOCTYPE html>
+<html lang=&quot;ja&quot;>
+<head>
+<meta charset=&quot;utf-8&quot;>
+<meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;>
+<title>岩渕水門のはたらき｜台風19号のときの荒川と隅田川</title>
+<style>
+  :root{
+    --ink:#12283d;
+    --ink-soft:#48607a;
+    --paper:#eaf0f6;
+    --panel:#ffffff;
+    --line:#c3d3e2;
+    --ara:#2e7fc9;
+    --ara-deep:#1c5a96;
+    --sumi:#e0446f;
+    --water:#4a9ad8;
+    --water-dark:#2f78b4;
+    --soil:#c9a06a;
+    --soil-dark:#a97f4c;
+    --land:#dde5d3;
+    --alert:#d8342a;
+    --gold:#f0b429;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:&quot;Hiragino Kaku Gothic ProN&quot;,&quot;Hiragino Sans&quot;,&quot;Yu Gothic&quot;,&quot;Noto Sans JP&quot;,&quot;Meiryo&quot;,sans-serif;
+    font-feature-settings:&quot;palt&quot; 1;
+    -webkit-font-smoothing:antialiased;
+  }
+  ruby rt{font-size:.5em;font-weight:400;letter-spacing:0}
+
+  .app{
+    height:100dvh;
+    display:grid;
+    grid-template-rows:auto minmax(0,1fr) auto auto;
+    gap:clamp(4px,.8vh,10px);
+    padding:clamp(6px,1.2vh,14px) clamp(8px,1.4vw,18px);
+  }
+
+  /* ---------- header ---------- */
+  header{
+    display:flex;align-items:baseline;gap:.8em;flex-wrap:wrap;
+  }
+  h1{
+    font-size:clamp(19px,3vh,29px);
+    letter-spacing:.02em;
+  }
+  h1 .sub{
+    font-size:.62em;font-weight:600;color:var(--ink-soft);margin-left:.6em;
+  }
+  .clock{
+    margin-left:auto;
+    font-size:clamp(16px,2.5vh,24px);
+    font-weight:700;
+    color:var(--ara-deep);
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:99px;
+    padding:.15em .9em;
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+  }
+
+  /* ---------- main ---------- */
+  main{
+    display:grid;
+    grid-template-columns:1.15fr 1fr;
+    gap:clamp(6px,1vw,12px);
+    min-height:0;
+  }
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:6px 8px 4px;
+    min-height:0;
+    display:grid;
+    grid-template-rows:auto minmax(0,1fr);
+  }
+  .panel > h2{
+    font-size:clamp(13px,2vh,18px);
+    font-weight:700;
+    color:var(--ink-soft);
+    padding-bottom:2px;
+  }
+  .panel svg{width:100%;height:100%;display:block}
+  .side{display:grid;grid-template-rows:1.15fr 1fr;gap:clamp(6px,1vh,12px);min-height:0}
+
+  /* ---------- caption ---------- */
+  .caption{
+    background:var(--ara-deep);
+    color:#fff;
+    border-radius:10px;
+    padding:clamp(6px,1.1vh,12px) clamp(10px,1.4vw,18px);
+    display:flex;align-items:center;gap:clamp(8px,1.2vw,16px);
+    min-height:clamp(64px,10vh,98px);
+  }
+  .caption.warn{background:var(--alert)}
+  .caption.act{background:#0f7a52}
+  .caption .step{
+    flex:0 0 auto;
+    font-size:clamp(20px,3.5vh,34px);
+    font-weight:800;
+    background:rgba(255,255,255,.18);
+    border-radius:8px;
+    padding:.05em .45em;
+    line-height:1.3;
+  }
+  .caption .txt strong{
+    display:block;
+    font-size:clamp(17px,2.8vh,27px);
+    letter-spacing:.01em;
+    line-height:1.35;
+  }
+  .caption .txt span{
+    display:block;
+    font-size:clamp(14px,2.2vh,20px);
+    font-weight:500;
+    opacity:.95;
+    line-height:1.45;
+    margin-top:.15em;
+  }
+
+  /* ---------- controls ---------- */
+  footer{display:flex;align-items:center;gap:clamp(5px,.8vw,10px);flex-wrap:wrap}
+  button{
+    font-family:inherit;font-weight:700;color:var(--ink);
+    background:#fff;border:1px solid var(--line);border-radius:8px;
+    padding:.42em .85em;font-size:clamp(14px,2.1vh,19px);
+    cursor:pointer;line-height:1.4;
+    transition:background .12s,border-color .12s,transform .08s;
+  }
+  button:hover{background:#f2f7fc;border-color:#8fb2d0}
+  button:active{transform:translateY(1px)}
+  button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .play{
+    background:var(--ara-deep);color:#fff;border-color:var(--ara-deep);
+    font-size:clamp(16px,2.5vh,23px);padding:.4em 1.2em;min-width:7em;
+  }
+  .play:hover{background:#164b80;border-color:#164b80}
+  .chips{display:flex;gap:4px;flex-wrap:wrap}
+  .chip.on{background:var(--ara);color:#fff;border-color:var(--ara)}
+  .ghost{background:#fff3e0;color:#8a5410;border-color:#dfa457}
+  .ghost:hover{background:#ffe8c9;border-color:#c8862f}
+  .ghost.on{background:#e2820c;color:#fff;border-color:#b96a05}
+  .ghost.on:hover{background:#cf7508;border-color:#b96a05}
+  .bar{
+    flex:1 1 120px;min-width:100px;height:9px;border-radius:99px;
+    background:#d3dfea;overflow:hidden;border:1px solid var(--line);
+  }
+  .bar i{display:block;height:100%;width:0;background:var(--ara);border-radius:99px}
+
+  /* svg text defaults */
+  text{font-family:inherit;fill:var(--ink)}
+  .lbl{font-size:21px;font-weight:800;paint-order:stroke;stroke:#fff;stroke-width:6px;stroke-linejoin:round}
+  .lgd{font-size:16px;font-weight:800;paint-order:stroke;stroke:#fff;stroke-width:4.5px;stroke-linejoin:round}
+  .lbl-s{font-size:16px;font-weight:700;paint-order:stroke;stroke:#fff;stroke-width:4.5px;stroke-linejoin:round}
+  .num{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;paint-order:stroke;stroke:#fff;stroke-width:4.5px;stroke-linejoin:round}
+  .numw{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;fill:#fff;paint-order:stroke;stroke:#15486f;stroke-width:4px;stroke-linejoin:round}
+  .gnd{font-size:15px;font-weight:700;fill:#fff;paint-order:stroke;stroke:#7a5a30;stroke-width:3.5px;stroke-linejoin:round}
+
+  #rain{opacity:0;transition:opacity .6s}
+  #rain.on{opacity:.85}
+  #rain line{animation:fall .42s linear infinite}
+  .paused #rain line{animation-play-state:paused}
+  @keyframes fall{from{transform:translate(0,-58px)}to{transform:translate(-19px,58px)}}
+  @media (prefers-reduced-motion:reduce){#rain line{animation:none}}
+
+  @media (max-width:840px){
+    main{grid-template-columns:1fr;grid-template-rows:1.1fr 1fr}
+    .side{grid-template-rows:none;grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+<div class=&quot;app&quot; id=&quot;app&quot;>
+
+  <header>
+    <h1><ruby>岩渕水門<rt>いわぶちすいもん</rt></ruby>のはたらき<span class=&quot;sub&quot;>2019年 台風19号のとき</span></h1>
+    <div class=&quot;clock&quot; id=&quot;clock&quot;>10月12日 0時</div>
+  </header>
+
+  <main>
+    <!-- ===== 上から見た図 ===== -->
+    <section class=&quot;panel&quot;>
+      <h2>上から見た図（教科書の写真①と同じ向き）</h2>
+      <svg id=&quot;map&quot; viewBox=&quot;0 0 760 520&quot; preserveAspectRatio=&quot;xMidYMid meet&quot;>
+        <defs>
+          <linearGradient id=&quot;wg&quot; x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;0&quot; y2=&quot;1&quot;>
+            <stop offset=&quot;0&quot; stop-color=&quot;#5aa8e0&quot;/><stop offset=&quot;1&quot; stop-color=&quot;#2f78b4&quot;/>
+          </linearGradient>
+        </defs>
+
+        <rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;760&quot; height=&quot;520&quot; fill=&quot;var(--land)&quot;/>
+        <g id=&quot;town&quot; fill=&quot;#c6cfc0&quot; opacity=&quot;.85&quot;></g>
+
+        <!-- banks -->
+        <path id=&quot;pUpB&quot;    d=&quot;M 505,-30 C 500,60 470,140 435,200&quot; stroke=&quot;var(--soil)&quot; stroke-width=&quot;98&quot;  fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/>
+        <path id=&quot;pAraB&quot;   d=&quot;M 435,200 C 470,265 495,330 515,405 C 530,462 540,510 545,560&quot; stroke=&quot;var(--soil)&quot; stroke-width=&quot;120&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/>
+        <path id=&quot;pSumiB&quot;  d=&quot;M 435,200 C 385,245 330,285 285,335 C 240,385 195,455 175,560&quot; stroke=&quot;var(--soil)&quot; stroke-width=&quot;62&quot;  fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/>
+
+        <!-- もしとじなかったら：まちにあふれた水 -->
+        <g id=&quot;floodG&quot; opacity=&quot;0&quot;>
+          <path id=&quot;floodHalo&quot; d=&quot;M 435,200 C 385,245 330,285 285,335 C 240,385 195,455 175,560&quot; stroke=&quot;#d8342a&quot; stroke-width=&quot;60&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; opacity=&quot;.22&quot;/>
+          <path id=&quot;floodBody&quot; d=&quot;M 435,200 C 385,245 330,285 285,335 C 240,385 195,455 175,560&quot; stroke=&quot;#a3805a&quot; stroke-width=&quot;46&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot; opacity=&quot;.72&quot;/>
+        </g>
+
+        <!-- water -->
+        <path id=&quot;pUp&quot;   d=&quot;M 505,-30 C 500,60 470,140 435,200&quot; stroke=&quot;url(#wg)&quot; stroke-width=&quot;80&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/>
+        <path id=&quot;pAra&quot;  d=&quot;M 435,200 C 470,265 495,330 515,405 C 530,462 540,510 545,560&quot; stroke=&quot;url(#wg)&quot; stroke-width=&quot;102&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/>
+        <path id=&quot;pSumi&quot; d=&quot;M 435,200 C 385,245 330,285 285,335 C 240,385 195,455 175,560&quot; stroke=&quot;url(#wg)&quot; stroke-width=&quot;46&quot; fill=&quot;none&quot; stroke-linecap=&quot;round&quot;/>
+
+        <g id=&quot;parts&quot;></g>
+        <g id=&quot;gate&quot;></g>
+
+        <text class=&quot;lbl&quot; x=&quot;600&quot; y=&quot;46&quot; text-anchor=&quot;middle&quot;>荒川（上流）</text>
+        <text class=&quot;lbl-s&quot; x=&quot;600&quot; y=&quot;68&quot; text-anchor=&quot;middle&quot;>埼玉のほうから</text>
+        <text class=&quot;lbl&quot; x=&quot;632&quot; y=&quot;330&quot; text-anchor=&quot;middle&quot; fill=&quot;var(--ara-deep)&quot;>荒川放水路</text>
+        <text class=&quot;lbl-s&quot; x=&quot;632&quot; y=&quot;354&quot; text-anchor=&quot;middle&quot;>約100年前につくった人工の川</text>
+        <text class=&quot;lbl&quot; x=&quot;120&quot; y=&quot;300&quot; text-anchor=&quot;middle&quot; fill=&quot;var(--sumi)&quot;>隅田川</text>
+        <text class=&quot;lbl-s&quot; x=&quot;120&quot; y=&quot;324&quot; text-anchor=&quot;middle&quot;>東京の中心部へ</text>
+        <text class=&quot;lbl-s&quot; x=&quot;175&quot; y=&quot;505&quot; text-anchor=&quot;middle&quot;>東京湾へ</text>
+        <text class=&quot;lbl-s&quot; x=&quot;565&quot; y=&quot;505&quot; text-anchor=&quot;middle&quot;>東京湾へ</text>
+
+        <g id=&quot;floodTxt&quot; opacity=&quot;0&quot;>
+          <text class=&quot;lbl&quot; x=&quot;205&quot; y=&quot;180&quot; text-anchor=&quot;middle&quot; fill=&quot;#c02a20&quot;>まちに水があふれる</text>
+          <text class=&quot;lbl-s&quot; x=&quot;205&quot; y=&quot;205&quot; text-anchor=&quot;middle&quot; fill=&quot;#c02a20&quot;>もし水門をとじなかったら…</text>
+        </g>
+        <g id=&quot;rain&quot; stroke=&quot;#5c9fd6&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot;></g>
+      </svg>
+    </section>
+
+    <div class=&quot;side&quot;>
+      <!-- ===== 横から見た図 ===== -->
+      <section class=&quot;panel&quot;>
+        <h2>横から見た図（川の水位とてい防の高さ）</h2>
+        <svg id=&quot;cross&quot; viewBox=&quot;0 0 430 270&quot; preserveAspectRatio=&quot;xMidYMid meet&quot;>
+          <defs>
+            <linearGradient id=&quot;sky&quot; x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;0&quot; y2=&quot;1&quot;>
+              <stop offset=&quot;0&quot; stop-color=&quot;#d4e6f4&quot;/><stop offset=&quot;1&quot; stop-color=&quot;#f2f7fb&quot;/>
+            </linearGradient>
+            <linearGradient id=&quot;wat&quot; x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;0&quot; y2=&quot;1&quot;>
+              <stop offset=&quot;0&quot; stop-color=&quot;#7cbdea&quot;/><stop offset=&quot;.55&quot; stop-color=&quot;#3d8ec4&quot;/><stop offset=&quot;1&quot; stop-color=&quot;#1f5c8b&quot;/>
+            </linearGradient>
+            <linearGradient id=&quot;soilg&quot; x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;0&quot; y2=&quot;1&quot;>
+              <stop offset=&quot;0&quot; stop-color=&quot;#d2ab77&quot;/><stop offset=&quot;1&quot; stop-color=&quot;#946f42&quot;/>
+            </linearGradient>
+          </defs>
+
+          <rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;430&quot; height=&quot;270&quot; fill=&quot;url(#sky)&quot;/>
+
+          <!-- 地面（町・てい防・川底を1本の線でつないだ地形） -->
+          <path id=&quot;ground&quot; fill=&quot;url(#soilg)&quot;/>
+          <path id=&quot;grass&quot; fill=&quot;none&quot; stroke=&quot;#8bb060&quot; stroke-width=&quot;5&quot; stroke-linejoin=&quot;round&quot; stroke-linecap=&quot;round&quot;/>
+          <path id=&quot;pave&quot;  fill=&quot;none&quot; stroke=&quot;#aeb4ba&quot; stroke-width=&quot;4&quot; stroke-linecap=&quot;round&quot;/>
+          <path id=&quot;wall&quot;  fill=&quot;#b6bdc3&quot; stroke=&quot;#8d959c&quot; stroke-width=&quot;1&quot;/>
+          <line id=&quot;wallTop&quot; x1=&quot;76&quot; y1=&quot;117.2&quot; x2=&quot;88&quot; y2=&quot;117.2&quot; stroke=&quot;#cfd5da&quot; stroke-width=&quot;3&quot;/>
+
+          <!-- まちのたてもの -->
+          <g id=&quot;bldgs&quot;>
+            <rect x=&quot;49&quot; y=&quot;132&quot; width=&quot;23&quot; height=&quot;37&quot; fill=&quot;#dde2e7&quot; stroke=&quot;#a8b0b8&quot;/>
+            <g fill=&quot;#8fb6d6&quot;>
+              <rect x=&quot;53&quot; y=&quot;137&quot; width=&quot;6&quot; height=&quot;6&quot;/><rect x=&quot;62&quot; y=&quot;137&quot; width=&quot;6&quot; height=&quot;6&quot;/>
+              <rect x=&quot;53&quot; y=&quot;147&quot; width=&quot;6&quot; height=&quot;6&quot;/><rect x=&quot;62&quot; y=&quot;147&quot; width=&quot;6&quot; height=&quot;6&quot;/>
+              <rect x=&quot;53&quot; y=&quot;157&quot; width=&quot;6&quot; height=&quot;6&quot;/><rect x=&quot;62&quot; y=&quot;157&quot; width=&quot;6&quot; height=&quot;6&quot;/>
+            </g>
+            <rect x=&quot;10&quot; y=&quot;146&quot; width=&quot;33&quot; height=&quot;23&quot; fill=&quot;#f8f3e6&quot; stroke=&quot;#b99a6d&quot;/>
+            <path d=&quot;M6,146 L26.5,130 L47,146 Z&quot; fill=&quot;#d86a4a&quot; stroke=&quot;#a94b31&quot;/>
+            <rect x=&quot;22&quot; y=&quot;155&quot; width=&quot;10&quot; height=&quot;14&quot; fill=&quot;#8fb6d6&quot;/>
+          </g>
+
+          <!-- 水 -->
+          <path id=&quot;wSumi&quot; fill=&quot;url(#wat)&quot;/>
+          <path id=&quot;wAra&quot;  fill=&quot;url(#wat)&quot;/>
+          <line id=&quot;sSumi&quot; stroke=&quot;#eaf6ff&quot; stroke-width=&quot;2&quot; opacity=&quot;.75&quot;/>
+          <line id=&quot;sAra&quot;  stroke=&quot;#eaf6ff&quot; stroke-width=&quot;2&quot; opacity=&quot;.75&quot;/>
+
+          <!-- もし水門をとじなかったら -->
+          <g id=&quot;ghostX&quot; opacity=&quot;0&quot;>
+            <path id=&quot;gWater&quot; fill=&quot;#d8342a&quot; opacity=&quot;.33&quot;/>
+            <path id=&quot;gTown&quot;  fill=&quot;#d8342a&quot; opacity=&quot;.33&quot;/>
+            <line id=&quot;gLine&quot; stroke=&quot;#d8342a&quot; stroke-width=&quot;2.5&quot; stroke-dasharray=&quot;7 5&quot;/>
+            <text id=&quot;gTxt&quot; class=&quot;lbl-s&quot; x=&quot;96&quot; text-anchor=&quot;middle&quot; fill=&quot;#d8342a&quot;></text>
+          </g>
+
+          <!-- 高さのめもり -->
+          <line x1=&quot;82&quot; y1=&quot;117.2&quot; x2=&quot;82&quot; y2=&quot;168.8&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1.6&quot; stroke-dasharray=&quot;4 3&quot;/>
+          <line x1=&quot;223&quot; y1=&quot;50&quot; x2=&quot;223&quot; y2=&quot;166.4&quot; stroke=&quot;#fff&quot; stroke-width=&quot;1.6&quot; stroke-dasharray=&quot;4 3&quot;/>
+          <text class=&quot;lbl-s&quot; x=&quot;82&quot; y=&quot;110&quot; text-anchor=&quot;middle&quot;>てい防 6.9m</text>
+          <text class=&quot;lbl-s&quot; x=&quot;223&quot; y=&quot;43&quot; text-anchor=&quot;middle&quot;>てい防 12.5m</text>
+
+          <text class=&quot;numw&quot; id=&quot;tSumi&quot; x=&quot;136&quot; text-anchor=&quot;middle&quot;>隅田川 1.62m</text>
+          <text class=&quot;numw&quot; id=&quot;tAra&quot;  x=&quot;352&quot; text-anchor=&quot;middle&quot;>荒川 7.17m</text>
+          <text class=&quot;gnd&quot; x=&quot;30&quot; y=&quot;192&quot; text-anchor=&quot;middle&quot;>まち</text>
+          <text class=&quot;gnd&quot; x=&quot;136&quot; y=&quot;250&quot; text-anchor=&quot;middle&quot;>隅田川</text>
+          <text class=&quot;gnd&quot; x=&quot;360&quot; y=&quot;258&quot; text-anchor=&quot;middle&quot;>荒川放水路</text>
+        </svg>
+      </section>
+
+      <!-- ===== グラフ ===== -->
+      <section class=&quot;panel&quot;>
+        <h2>川の水位のようす（教科書の図②）</h2>
+        <svg id=&quot;graph&quot; viewBox=&quot;0 0 430 200&quot; preserveAspectRatio=&quot;xMidYMid meet&quot;>
+          <rect id=&quot;gShade&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;0&quot; height=&quot;0&quot; fill=&quot;#f3d98a&quot; opacity=&quot;.45&quot; stroke=&quot;none&quot; stroke-width=&quot;2&quot;/>
+          <text id=&quot;gShadeT&quot; class=&quot;lbl-s&quot; x=&quot;0&quot; y=&quot;30&quot; text-anchor=&quot;middle&quot; opacity=&quot;0&quot;>岩渕水門をとじる</text>
+          <g id=&quot;axes&quot; stroke=&quot;var(--line)&quot; stroke-width=&quot;1&quot;></g>
+          <line id=&quot;dangerL&quot; x1=&quot;46&quot; y1=&quot;44&quot; x2=&quot;410&quot; y2=&quot;44&quot; stroke=&quot;var(--sumi)&quot; stroke-width=&quot;1.6&quot; stroke-dasharray=&quot;6 4&quot;/>
+          <text class=&quot;lbl-s&quot; x=&quot;410&quot; y=&quot;39&quot; text-anchor=&quot;end&quot; fill=&quot;var(--sumi)&quot;>隅田川のてい防の高さ 6.9m</text>
+          <g id=&quot;ovG&quot; opacity=&quot;0&quot;>
+            <line id=&quot;ovLine&quot; stroke=&quot;#d8342a&quot; stroke-width=&quot;2&quot; stroke-dasharray=&quot;5 4&quot;/>
+            <circle id=&quot;ovDot&quot; r=&quot;4.5&quot; fill=&quot;#d8342a&quot; stroke=&quot;#fff&quot; stroke-width=&quot;2&quot;/>
+            <text id=&quot;ovTxt&quot; class=&quot;lbl-s&quot; text-anchor=&quot;start&quot; fill=&quot;#d8342a&quot;>あふれる</text>
+          </g>
+          <path id=&quot;lnAra&quot;  fill=&quot;none&quot; stroke=&quot;var(--ara)&quot;  stroke-width=&quot;3&quot; stroke-linejoin=&quot;round&quot; stroke-linecap=&quot;round&quot;/>
+          <path id=&quot;lnSumi&quot; fill=&quot;none&quot; stroke=&quot;var(--sumi)&quot; stroke-width=&quot;3&quot; stroke-linejoin=&quot;round&quot; stroke-linecap=&quot;round&quot;/>
+          <path id=&quot;lnGhost&quot; fill=&quot;none&quot; stroke=&quot;var(--sumi)&quot; stroke-width=&quot;3.2&quot; stroke-dasharray=&quot;8 5&quot; stroke-linecap=&quot;round&quot; opacity=&quot;0&quot;/>
+          <circle id=&quot;dAra&quot;  r=&quot;4.5&quot; fill=&quot;var(--ara)&quot;  stroke=&quot;#fff&quot; stroke-width=&quot;2&quot;/>
+          <circle id=&quot;dSumi&quot; r=&quot;4.5&quot; fill=&quot;var(--sumi)&quot; stroke=&quot;#fff&quot; stroke-width=&quot;2&quot;/>
+          <text class=&quot;lbl-s&quot; x=&quot;14&quot; y=&quot;100&quot; text-anchor=&quot;middle&quot; transform=&quot;rotate(-90,14,100)&quot;>川の水位（m）</text>
+          <!-- どちらの線がどの川か -->
+          <g id=&quot;legend&quot;>
+            <line x1=&quot;48&quot; y1=&quot;152&quot; x2=&quot;68&quot; y2=&quot;152&quot; stroke=&quot;var(--ara)&quot; stroke-width=&quot;3.5&quot; stroke-linecap=&quot;round&quot;/>
+            <text class=&quot;lgd&quot; x=&quot;72&quot; y=&quot;157&quot; fill=&quot;var(--ara-deep)&quot;>荒川</text>
+            <line x1=&quot;116&quot; y1=&quot;152&quot; x2=&quot;136&quot; y2=&quot;152&quot; stroke=&quot;var(--sumi)&quot; stroke-width=&quot;3.5&quot; stroke-linecap=&quot;round&quot;/>
+            <text class=&quot;lgd&quot; x=&quot;140&quot; y=&quot;157&quot; fill=&quot;var(--sumi)&quot;>隅田川</text>
+          </g>
+        </svg>
+      </section>
+    </div>
+  </main>
+
+  <div class=&quot;caption&quot; id=&quot;cap&quot;>
+    <div class=&quot;step&quot; id=&quot;capStep&quot;>1</div>
+    <div class=&quot;txt&quot;><strong id=&quot;capA&quot;>ふだんの荒川と隅田川</strong><span id=&quot;capB&quot;>再生ボタンをおすと、台風19号のときのようすが動きだします。</span></div>
+  </div>
+
+  <footer>
+    <button class=&quot;play&quot; id=&quot;btnPlay&quot;>▶ 再生</button>
+    <div class=&quot;chips&quot; id=&quot;chips&quot;></div>
+    <button class=&quot;ghost&quot; id=&quot;btnGhost&quot;>もし水門をとじなかったら</button>
+    <div class=&quot;bar&quot;><i id=&quot;barFill&quot;></i></div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  &quot;use strict&quot;;
+  const $ = s => document.querySelector(s);
+  const SVGNS = &quot;http://www.w3.org/2000/svg&quot;;
+  const el = (n,a)=>{const e=document.createElementNS(SVGNS,n);for(const k in a)e.setAttribute(k,a[k]);return e;};
+
+  /* ============ 水位データ（教科書の図②をもとに） ============ */
+  const H_END = 72;        // 10/12 0時 → 10/15 0時
+  const H_CLOSE = 24;      // 水門をとじた時
+  const H_PEAK = 33.8;     // 13日9時50分（荒川の最高水位）
+  const DIKE_SUMI = 6.9, DIKE_ARA = 12.5;
+
+  const KEY_A = [[0,1.9],[8,2.1],[14,2.8],[18,3.9],[22,5.6],[26,6.9],[30,7.12],[33.8,7.17],
+                 [38,6.9],[44,6.2],[50,5.3],[56,4.5],[62,3.9],[72,3.1]];
+  function interp(keys,h){
+    if(h<=keys[0][0])return keys[0][1];
+    if(h>=keys[keys.length-1][0])return keys[keys.length-1][1];
+    for(let i=0;i<keys.length-1;i++){
+      const[a,va]=keys[i],[b,vb]=keys[i+1];
+      if(h<=b){const u=(h-a)/(b-a);const s=(1-Math.cos(u*Math.PI))/2;return va+(vb-va)*s;}
+    }
+    return 0;
+  }
+  const levelAra = h => interp(KEY_A,h);
+  const maxAra = h => h<H_PEAK ? levelAra(h) : levelAra(H_PEAK);
+  // 水門をとじなかった場合、隅田川がてい防（6.9m）をこえる時こく
+  let H_OVER = H_PEAK;
+  for(let h=H_CLOSE;h<=H_PEAK;h+=0.05){ if(levelAra(h)>DIKE_SUMI){ H_OVER=h; break; } }
+  const OVER_LABEL = `13日${Math.floor(H_OVER-24)}時ごろ`;
+  // 水門を閉めたあとの隅田川：しおの満ち引きでゆれながら低いまま
+  const tide = h => 2.95 + 1.33*Math.cos(2*Math.PI*(h-H_PEAK)/12.4 + Math.PI);
+  function levelSumi(h){
+    if(h<=H_CLOSE) return levelAra(h);
+    const u = Math.min(1,(h-H_CLOSE)/9.8);
+    const s = u*u*(3-2*u);
+    return levelAra(h)*(1-s) + tide(h)*s;
+  }
+
+  /* ============ 状態 ============ */
+  let t = 0, playing = false, holdUntil = 0, ghost = false, flood = 0;
+  const holds = [{h:H_CLOSE,d:1700,done:false},{h:H_PEAK,d:2000,done:false}];
+  const RATE = 72/33; // 1秒あたりの時間（全体で約33秒）
+
+  /* ============ 上から見た図 ============ */
+  const pUp=$(&quot;#pUp&quot;), pAra=$(&quot;#pAra&quot;), pSumi=$(&quot;#pSumi&quot;);
+  const LUp=pUp.getTotalLength(), LAra=pAra.getTotalLength(), LSumi=pSumi.getTotalLength();
+
+  // まち（家のかたまり）
+  (function(){
+    const g=$(&quot;#town&quot;), spots=[[70,250],[45,320],[105,370],[60,420],[135,455],[210,470],[250,410],[300,455],
+      [180,250],[240,300],[300,250],[350,400],[390,455],[120,180],[200,150],[60,150],[300,120],[380,90],[640,150],[700,230],[690,420],[720,120]];
+    spots.forEach(([x,y],i)=>{
+      const w=26+(i%3)*10, h=18+(i%2)*8;
+      g.appendChild(el(&quot;rect&quot;,{x:x-w/2,y:y-h/2,width:w,height:h,rx:2}));
+    });
+  })();
+
+  // 水門（隅田川の入口）
+  const GATE_AT = 62; // 分岐からの距離
+  const gateG = $(&quot;#gate&quot;), gp = pSumi.getPointAtLength(GATE_AT);
+  const gp2 = pSumi.getPointAtLength(GATE_AT+6);
+  const gateAng = Math.atan2(gp2.y-gp.y, gp2.x-gp.x)*180/Math.PI;
+  const gateP = GATE_AT/LSumi;
+  gateG.setAttribute(&quot;transform&quot;,`translate(${gp.x},${gp.y}) rotate(${gateAng})`);
+  const doors=[];
+  (function(){
+    // 川の中に立つ4本の柱（この間を水が通る）
+    [-25,-8,8,25].forEach(y=>{
+      gateG.appendChild(el(&quot;rect&quot;,{x:-9,y:y-3,width:18,height:6,rx:1.5,
+        fill:&quot;#9aa7b2&quot;,stroke:&quot;#65727d&quot;,&quot;stroke-width&quot;:1}));
+    });
+    // 柱の上をつなぐ通路（細い橋）
+    gateG.appendChild(el(&quot;rect&quot;,{x:-11,y:-28,width:3.5,height:56,fill:&quot;#aab5be&quot;,opacity:&quot;.7&quot;}));
+    // 3つの門（とじるときだけ下りてくる）
+    [-16.5,0,16.5].forEach(c=>{
+      const d=el(&quot;rect&quot;,{x:-5.5,y:c,width:11,height:0,rx:1,
+        fill:&quot;#d94f3a&quot;,stroke:&quot;#a33a29&quot;,&quot;stroke-width&quot;:1});
+      d.dataset.c=c; doors.push(d); gateG.appendChild(d);
+    });
+    const lab=el(&quot;text&quot;,{class:&quot;lbl&quot;,x:0,y:-52,&quot;text-anchor&quot;:&quot;middle&quot;,transform:`rotate(${-gateAng})`});
+    lab.textContent=&quot;岩渕水門&quot;; gateG.appendChild(lab);
+    const st=el(&quot;text&quot;,{id:&quot;gateState&quot;,class:&quot;lbl-s&quot;,x:0,y:-30,&quot;text-anchor&quot;:&quot;middle&quot;,transform:`rotate(${-gateAng})`,fill:&quot;#0f7a52&quot;});
+    st.textContent=&quot;ひらいている&quot;; gateG.appendChild(st);
+  })();
+  const gateState=$(&quot;#gateState&quot;);
+
+  // 水のつぶ
+  const partsG=$(&quot;#parts&quot;);
+  function mk(n,path,L,arr){
+    for(let i=0;i<n;i++){
+      const c=el(&quot;circle&quot;,{r:5.5,fill:&quot;#eaf6ff&quot;,opacity:&quot;.95&quot;});
+      partsG.appendChild(c); arr.push({p:i/n,c,path,L});
+    }
+  }
+  const pu=[],pa=[],ps=[];
+  mk(9,pUp,LUp,pu); mk(13,pAra,LAra,pa); mk(9,pSumi,LSumi,ps);
+  function place(o){
+    const q=o.path.getPointAtLength(o.p*o.L);
+    o.c.setAttribute(&quot;cx&quot;,q.x); o.c.setAttribute(&quot;cy&quot;,q.y);
+  }
+
+  // 雨
+  (function(){
+    const g=$(&quot;#rain&quot;);
+    for(let i=0;i<95;i++){
+      const x=Math.random()*800-20, y=Math.random()*540-10;
+      const len=16+Math.random()*20;
+      const l=el(&quot;line&quot;,{x1:x,y1:y,x2:x-len*0.32,y2:y+len,
+        &quot;stroke-width&quot;:(1.8+Math.random()*2).toFixed(1),
+        opacity:(0.45+Math.random()*0.55).toFixed(2)});
+      l.style.animationDelay = (-Math.random()*0.5)+&quot;s&quot;;
+      g.appendChild(l);
+    }
+  })();
+
+  /* ============ 横から見た図（地形にそって水を入れる） ============ */
+  const ZERO=200, SCALE=12, BOT=270;
+  const PY = e => ZERO - e*SCALE;
+  // [x(px), 高さ(m)] 町 → 隅田川 → 大きなてい防 → 荒川放水路
+  const TER=[[0,2.6],[50,2.6],[62,2.75],[74,2.75],[76,6.9],[88,6.9],[90,-2.2],
+             [176,-2.2],[193,3.5],[212,12.5],[236,12.5],[252,2.8],
+             [318,2.8],[336,-3.0],[424,-3.0],[430,-2.8]];
+  function terr(x){
+    if(x<=TER[0][0])return TER[0][1];
+    for(let i=0;i<TER.length-1;i++){
+      const[ax,ae]=TER[i],[bx,be]=TER[i+1];
+      if(x<=bx) return ae+(be-ae)*(x-ax)/(bx-ax);
+    }
+    return TER[TER.length-1][1];
+  }
+  function terrD(x0,x1){ // 地形線をなぞるパス（左→右）
+    let d=&quot;&quot;, pts=[];
+    for(let i=0;i<TER.length;i++){ if(TER[i][0]>=x0&amp;&amp;TER[i][0]<=x1) pts.push(TER[i]); }
+    pts.forEach((p,i)=> d+=(i?&quot;L&quot;:&quot;M&quot;)+p[0]+&quot;,&quot;+PY(p[1]).toFixed(1));
+    return d;
+  }
+  // 地面・草・舗装・護岸
+  $(&quot;#ground&quot;).setAttribute(&quot;d&quot;, terrD(0,430)+`L430,${BOT} L0,${BOT} Z`);
+  $(&quot;#grass&quot;).setAttribute(&quot;d&quot;, terrD(176,336));
+  $(&quot;#pave&quot;).setAttribute(&quot;d&quot;, terrD(0,74));
+  $(&quot;#wall&quot;).setAttribute(&quot;d&quot;,
+    `M74,${PY(2.75)} L76,${PY(6.9)} L88,${PY(6.9)} L90,${PY(-2.2)} L90,${PY(-3.4)} L74,${PY(-3.4)} Z`);
+
+  // 水面の高さ L まで水を入れる（かわいた所はまたがない）
+  function wetRuns(x0,x1,L){
+    const st=0.5, runs=[]; let cur=null;
+    for(let x=x0;x<=x1+.001;x+=st){
+      if(terr(x)<L){ if(!cur)cur={a:x,b:x}; else cur.b=x; }
+      else if(cur){ runs.push(cur); cur=null; }
+    }
+    if(cur)runs.push(cur);
+    return runs;
+  }
+  function runsPath(runs,L){
+    let d=&quot;&quot;;
+    for(const r of runs){
+      d+=&quot;M&quot;+r.a.toFixed(1)+&quot;,&quot;+PY(L).toFixed(1)+&quot;L&quot;+r.b.toFixed(1)+&quot;,&quot;+PY(L).toFixed(1);
+      for(let x=r.b;x>=r.a;x-=1) d+=&quot;L&quot;+x.toFixed(1)+&quot;,&quot;+PY(terr(x)).toFixed(1);
+      d+=&quot;Z&quot;;
+    }
+    return d;
+  }
+  function surface(ln,runs,L){
+    if(!runs.length){ ln.setAttribute(&quot;opacity&quot;,0); return; }
+    const a=runs[0].a, b=runs[runs.length-1].b, y=PY(L);
+    ln.setAttribute(&quot;x1&quot;,a); ln.setAttribute(&quot;x2&quot;,b);
+    ln.setAttribute(&quot;y1&quot;,y); ln.setAttribute(&quot;y2&quot;,y);
+    ln.setAttribute(&quot;opacity&quot;,.75);
+  }
+  const tSumi=$(&quot;#tSumi&quot;), tAra=$(&quot;#tAra&quot;);
+  function drawCross(a,s,ag){
+    const rs=wetRuns(88,215,s), ra=wetRuns(237,430,a);
+    $(&quot;#wSumi&quot;).setAttribute(&quot;d&quot;,runsPath(rs,s));
+    $(&quot;#wAra&quot;).setAttribute(&quot;d&quot;,runsPath(ra,a));
+    surface($(&quot;#sSumi&quot;),rs,s); surface($(&quot;#sAra&quot;),ra,a);
+    tSumi.setAttribute(&quot;y&quot;,PY(s)+19); tSumi.textContent=&quot;隅田川 &quot;+s.toFixed(2)+&quot;m&quot;;
+    tAra.setAttribute(&quot;y&quot;,PY(a)+21);  tAra.textContent=&quot;荒川 &quot;+a.toFixed(2)+&quot;m&quot;;
+    // もし水門をとじなかったら（隅田川も荒川と同じ高さになる）
+    const over=ag>DIKE_SUMI;
+    $(&quot;#gWater&quot;).setAttribute(&quot;d&quot;,runsPath(wetRuns(88,215,ag),ag));
+    $(&quot;#gTown&quot;).setAttribute(&quot;d&quot;, over?runsPath(wetRuns(0,88,ag),ag):&quot;&quot;);
+    const gl=$(&quot;#gLine&quot;);
+    gl.setAttribute(&quot;x1&quot;,0); gl.setAttribute(&quot;x2&quot;,192);
+    gl.setAttribute(&quot;y1&quot;,PY(ag)); gl.setAttribute(&quot;y2&quot;,PY(ag));
+    $(&quot;#gTxt&quot;).setAttribute(&quot;y&quot;,PY(ag)-8);
+    $(&quot;#gTxt&quot;).textContent = over ? &quot;水があふれて まちが水につかる&quot; : &quot;水位はここまで上がってしまう&quot;;
+  }
+  /* ============ グラフ ============ */
+  const GX=h=>46+(h/H_END)*364, GY=m=>168-(m/8)*128;
+  (function(){
+    const g=$(&quot;#axes&quot;);
+    for(let m=0;m<=8;m+=2){
+      g.appendChild(el(&quot;line&quot;,{x1:46,y1:GY(m),x2:410,y2:GY(m),stroke:&quot;#dbe6f0&quot;}));
+      const tx=el(&quot;text&quot;,{x:36,y:GY(m)+5,&quot;text-anchor&quot;:&quot;end&quot;,&quot;font-size&quot;:13,fill:&quot;#48607a&quot;});
+      tx.textContent=m; g.appendChild(tx);
+    }
+    [[0,&quot;10月12日&quot;],[24,&quot;13日&quot;],[48,&quot;14日&quot;],[72,&quot;15日&quot;]].forEach(([h,s])=>{
+      g.appendChild(el(&quot;line&quot;,{x1:GX(h),y1:168,x2:GX(h),y2:173,stroke:&quot;#9db3c6&quot;}));
+      const tx=el(&quot;text&quot;,{x:GX(h),y:188,&quot;text-anchor&quot;:&quot;middle&quot;,&quot;font-size&quot;:13,fill:&quot;#48607a&quot;});
+      tx.textContent=s; g.appendChild(tx);
+    });
+    g.appendChild(el(&quot;line&quot;,{x1:46,y1:168,x2:410,y2:168,stroke:&quot;#9db3c6&quot;,&quot;stroke-width&quot;:1.5}));
+    g.appendChild(el(&quot;line&quot;,{x1:46,y1:24,x2:46,y2:168,stroke:&quot;#9db3c6&quot;,&quot;stroke-width&quot;:1.5}));
+  })();
+  $(&quot;#dangerL&quot;).setAttribute(&quot;y1&quot;,GY(DIKE_SUMI)); $(&quot;#dangerL&quot;).setAttribute(&quot;y2&quot;,GY(DIKE_SUMI));
+  (function(){ // 6.9mラベルの位置
+    const t=document.querySelector('#graph text[fill=&quot;var(--sumi)&quot;]');
+    if(t) t.setAttribute(&quot;y&quot;, GY(DIKE_SUMI)-5);
+  })();
+
+  function line(fn,upto){
+    let d=&quot;&quot;;
+    for(let h=0;h<=upto+0.001;h+=0.5){const hh=Math.min(h,upto);d+=(d?&quot;L&quot;:&quot;M&quot;)+GX(hh).toFixed(1)+&quot;,&quot;+GY(fn(hh)).toFixed(1);}
+    return d;
+  }
+  function drawGraph(whatIf){
+    $(&quot;#lnAra&quot;).setAttribute(&quot;d&quot;,line(levelAra,t));
+    $(&quot;#lnSumi&quot;).setAttribute(&quot;d&quot;,line(levelSumi,t));
+    $(&quot;#dAra&quot;).setAttribute(&quot;cx&quot;,GX(t)); $(&quot;#dAra&quot;).setAttribute(&quot;cy&quot;,GY(levelAra(t)));
+    $(&quot;#dSumi&quot;).setAttribute(&quot;cx&quot;,GX(t)); $(&quot;#dSumi&quot;).setAttribute(&quot;cy&quot;,GY(levelSumi(t)));
+    const closed=t>=H_CLOSE;
+    const sh=$(&quot;#gShade&quot;);
+    sh.setAttribute(&quot;x&quot;,GX(H_CLOSE)); sh.setAttribute(&quot;y&quot;,24);
+    sh.setAttribute(&quot;width&quot;, closed? GX(t)-GX(H_CLOSE):0); sh.setAttribute(&quot;height&quot;,144);
+    sh.setAttribute(&quot;fill&quot;, whatIf?&quot;#f0a94e&quot;:&quot;#f3d98a&quot;);
+    sh.setAttribute(&quot;stroke&quot;, whatIf?&quot;#c8781a&quot;:&quot;none&quot;);
+    const st=$(&quot;#gShadeT&quot;);
+    st.setAttribute(&quot;x&quot;,(GX(H_CLOSE)+GX(Math.max(t,H_CLOSE+10)))/2);
+    st.setAttribute(&quot;opacity&quot;, closed?1:0);
+    st.textContent = whatIf ? &quot;もし水門をとじなかったら…&quot; : &quot;岩渕水門をとじる&quot;;
+    st.setAttribute(&quot;fill&quot;, whatIf?&quot;#a85e08&quot;:&quot;#12283d&quot;);
+    // 「もし」のときは、実さいの隅田川の線をうすくして、点線を主役にする
+    $(&quot;#lnSumi&quot;).setAttribute(&quot;opacity&quot;, whatIf?&quot;.22&quot;:&quot;1&quot;);
+    $(&quot;#dSumi&quot;).setAttribute(&quot;opacity&quot;, whatIf?&quot;.22&quot;:&quot;1&quot;);
+    if(ghost&amp;&amp;closed){
+      $(&quot;#lnGhost&quot;).setAttribute(&quot;opacity&quot;,1);
+      let d=&quot;&quot;;
+      for(let h=H_CLOSE;h<=t;h+=0.5) d+=(d?&quot;L&quot;:&quot;M&quot;)+GX(h).toFixed(1)+&quot;,&quot;+GY(levelAra(h)).toFixed(1);
+      $(&quot;#lnGhost&quot;).setAttribute(&quot;d&quot;,d);
+    } else $(&quot;#lnGhost&quot;).setAttribute(&quot;opacity&quot;,0);
+    const showOv = ghost &amp;&amp; closed;
+    $(&quot;#ovG&quot;).setAttribute(&quot;opacity&quot;, showOv?1:0);
+    if(showOv){
+      const x=GX(H_OVER), y=GY(DIKE_SUMI);
+      $(&quot;#ovLine&quot;).setAttribute(&quot;x1&quot;,x); $(&quot;#ovLine&quot;).setAttribute(&quot;x2&quot;,x);
+      $(&quot;#ovLine&quot;).setAttribute(&quot;y1&quot;,y); $(&quot;#ovLine&quot;).setAttribute(&quot;y2&quot;,168);
+      $(&quot;#ovDot&quot;).setAttribute(&quot;cx&quot;,x); $(&quot;#ovDot&quot;).setAttribute(&quot;cy&quot;,y);
+      $(&quot;#ovTxt&quot;).setAttribute(&quot;x&quot;,x+7); $(&quot;#ovTxt&quot;).setAttribute(&quot;y&quot;,157);
+    }
+  }
+
+  /* ============ 場面のことば ============ */
+  const SCENES=[
+    {h:0,  n:&quot;1&quot;,tone:&quot;&quot;,     a:&quot;ふだんの荒川と隅田川&quot;,
+     b:&quot;上流から来た荒川の水は、岩渕水門を通って隅田川へ、そして荒川放水路へと分かれて流れています。&quot;},
+    {h:13, n:&quot;2&quot;,tone:&quot;&quot;,     a:&quot;台風19号の大雨がふりつづく&quot;,
+     b:&quot;川の水がどんどんふえてきました。隅田川の水位も、荒川といっしょに上がっていきます。&quot;},
+    {h:21, n:&quot;3&quot;,tone:&quot;warn&quot;, a:&quot;このままでは、隅田川のてい防（6.9m）をこえてしまう&quot;,
+     b:&quot;隅田川のてい防は6.9m。まわりには家や店がたくさんあり、あふれると大きな被害が出ます。&quot;},
+    {h:H_CLOSE,n:&quot;4&quot;,tone:&quot;act&quot;,a:&quot;岩渕水門をとじた&quot;,
+     b:&quot;水門をとじて、荒川の水が隅田川に入らないようにしました。&quot;},
+    {h:26, n:&quot;5&quot;,tone:&quot;&quot;,     a:&quot;水は、すべて荒川放水路へ&quot;,
+     b:&quot;隅田川に残っていた水は海へ流れていきます。新しい水が入ってこないので、水位が下がります。&quot;},
+    {h:H_PEAK,n:&quot;6&quot;,tone:&quot;&quot;, a:&quot;13日9時50分　荒川 7.17m ／ 隅田川 1.62m&quot;,
+     b:&quot;荒川は最高水位になりましたが、てい防は12.5mなのでだいじょうぶ。隅田川はぐんと低いままです。&quot;},
+    {h:36, n:&quot;7&quot;,tone:&quot;&quot;,     a:&quot;水がへるまで、水門はとじたまま&quot;,
+     b:&quot;隅田川の水位が上下しているのは、海のしおの満ち引きのためです。てい防の高さにはとどきません。&quot;},
+    {h:60, n:&quot;8&quot;,tone:&quot;act&quot;,  a:&quot;まちは水害から守られた&quot;,
+     b:&quot;荒川放水路と岩渕水門のはたらきで、東京の中心部を通る隅田川はあふれませんでした。&quot;}
+  ];
+  const GH_PRE={n:&quot;？&quot;,tone:&quot;warn&quot;,a:&quot;もし岩渕水門をとじなかったら…&quot;,
+    b:`隅田川の水位は荒川と同じまま上がりつづけ、${OVER_LABEL}にてい防（6.9m）をこえてあふれます。`};
+  const GH_OVER={n:&quot;！&quot;,tone:&quot;warn&quot;,a:&quot;もし岩渕水門をとじなかったら、隅田川はあふれていた&quot;,
+    b:&quot;荒川の水がそのまま流れこみ、水位がてい防（6.9m）をこえました。まちに水が広がっていきます。&quot;};
+  function scene(h){let s=SCENES[0];for(const x of SCENES) if(h>=x.h) s=x; return s;}
+  let lastScene=null;
+  function drawCaption(whatIf){
+    const s = whatIf ? (maxAra(t)>DIKE_SUMI ? GH_OVER : GH_PRE) : scene(t);
+    if(s===lastScene) return; lastScene=s;
+    $(&quot;#capStep&quot;).textContent=s.n; $(&quot;#capA&quot;).textContent=s.a; $(&quot;#capB&quot;).textContent=s.b;
+    $(&quot;#cap&quot;).className=&quot;caption&quot;+(s.tone?&quot; &quot;+s.tone:&quot;&quot;);
+    [...$(&quot;#chips&quot;).children].forEach(c=>c.classList.toggle(&quot;on&quot;, +c.dataset.i===SCENES.indexOf(s)));
+  }
+  // ジャンプボタン
+  [[0,&quot;① ふだん&quot;],[1,&quot;② 大雨&quot;],[3,&quot;④ 水門をとじる&quot;],[5,&quot;⑥ 最高水位&quot;],[7,&quot;⑧ まちを守る&quot;]].forEach(([i,label])=>{
+    const b=document.createElement(&quot;button&quot;);
+    b.className=&quot;chip&quot;; b.dataset.i=i; b.textContent=label;
+    b.onclick=()=>{ pause(); t=SCENES[i].h; holds.forEach(x=>x.done = x.h<=t); render(); };
+    $(&quot;#chips&quot;).appendChild(b);
+  });
+
+  /* ============ 描画 ============ */
+  function render(){
+    const a=levelAra(t), s=levelSumi(t), closed=t>=H_CLOSE;
+    const whatIf = ghost &amp;&amp; closed;          // 「もし水門をとじなかったら」の表示中
+    const ag = maxAra(t);                    // とじなかったら隅田川が上がっていた高さ
+    // 時こく
+    const day=12+Math.floor(t/24), hh=Math.floor(t%24), mm=Math.floor((t%1)*60);
+    $(&quot;#clock&quot;).textContent=`10月${day}日 ${hh}時${String(mm).padStart(2,&quot;0&quot;)}分`;
+    // 水門（「もし」のときは、あけたままの姿を見せる）
+    const shut = closed &amp;&amp; !whatIf;
+    doors.forEach(d=>{
+      const h = shut?13.5:0;
+      d.setAttribute(&quot;height&quot;,h);
+      d.setAttribute(&quot;y&quot;, (+d.dataset.c) - h/2);
+    });
+    gateState.textContent = whatIf ? &quot;とじなかったら…&quot; : (closed?&quot;とじている&quot;:&quot;ひらいている&quot;);
+    gateState.setAttribute(&quot;fill&quot;, whatIf?&quot;#c02a20&quot;:(closed?&quot;#d94f3a&quot;:&quot;#0f7a52&quot;));
+    pSumi.setAttribute(&quot;opacity&quot;, shut?&quot;.55&quot;:&quot;1&quot;);
+    // まちにあふれる水
+    $(&quot;#floodG&quot;).setAttribute(&quot;opacity&quot;, whatIf?1:0);
+    $(&quot;#floodHalo&quot;).setAttribute(&quot;stroke-width&quot;, 60+flood*196);
+    $(&quot;#floodBody&quot;).setAttribute(&quot;stroke-width&quot;, 46+flood*190);
+    $(&quot;#floodTxt&quot;).setAttribute(&quot;opacity&quot;, (whatIf&amp;&amp;flood>0.25)?1:0);
+    // 雨（だんだん強くなり、やがて弱まる）
+    let rainI = 0;
+    if(t>7 &amp;&amp; t<36){
+      rainI = Math.min((t-7)/7, 1) * Math.min((36-t)/6, 1);
+      rainI = Math.max(0, Math.min(1, rainI));
+    }
+    $(&quot;#rain&quot;).style.opacity = rainI.toFixed(2);
+    drawCross(a,s,ag); drawGraph(whatIf); drawCaption(whatIf);
+    $(&quot;#barFill&quot;).style.width=(t/H_END*100)+&quot;%&quot;;
+    $(&quot;#ghostX&quot;).setAttribute(&quot;opacity&quot;, whatIf?1:0);
+    pu.forEach(place); pa.forEach(place); ps.forEach(place);
+  }
+
+  /* ============ アニメーション ============ */
+  let last=performance.now();
+  function loop(now){
+    const dt=Math.min(0.05,(now-last)/1000); last=now;
+    if(playing){
+      if(now>=holdUntil){
+        let nt=t+dt*RATE;
+        for(const hd of holds){ if(!hd.done &amp;&amp; t<hd.h &amp;&amp; nt>=hd.h){ nt=hd.h; hd.done=true; holdUntil=now+hd.d; break; } }
+        t=nt;
+        if(t>=H_END){ t=H_END; pause(); }
+      }
+    }
+    // 水のつぶ（「もし」の表示中は、水門をあけたまま流す）
+    const f=0.35+levelAra(t)/9, closed=t>=H_CLOSE;
+    const whatIf = ghost &amp;&amp; closed, shut = closed &amp;&amp; !whatIf;
+    const move = (playing &amp;&amp; now>=holdUntil ? dt : 0) || (whatIf?dt*0.8:0);
+    pu.forEach(o=>{o.p+=move*0.085*f; if(o.p>1)o.p-=1;});
+    pa.forEach(o=>{o.p+=move*0.075*f*(shut?1.3:1); if(o.p>1)o.p-=1;});
+    ps.forEach(o=>{
+      if(shut){ if(o.p>gateP){ o.p+=move*0.075*f; if(o.p>1)o.p=1.6; } }
+      else { if(o.p>1.5)o.p=0; o.p+=move*0.075*f; if(o.p>1)o.p-=1; }
+    });
+    ps.forEach(o=>o.c.setAttribute(&quot;opacity&quot;, o.p>1.05?0:.95));
+    // まちへあふれる水の広がり
+    const target = (whatIf &amp;&amp; maxAra(t)>DIKE_SUMI) ? 1 : 0;
+    if(Math.abs(flood-target)>0.002){
+      flood += Math.sign(target-flood)*Math.min(Math.abs(target-flood), dt*0.7);
+      if(!playing) render();
+    }
+    if(playing) render(); else { pu.forEach(place); pa.forEach(place); ps.forEach(place); }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  /* ============ 操作 ============ */
+  function play(fromStart){
+    if(fromStart || t>=H_END) reset();
+    playing=true; $(&quot;#btnPlay&quot;).textContent=&quot;⏸ 一時停止&quot;; $(&quot;#app&quot;).classList.remove(&quot;paused&quot;);
+  }
+  function pause(){ playing=false; $(&quot;#btnPlay&quot;).textContent=&quot;▶ 再生&quot;; $(&quot;#app&quot;).classList.add(&quot;paused&quot;); }
+  function reset(){
+    t=0; holds.forEach(h=>h.done=false); holdUntil=0; lastScene=null; flood=0;
+    ps.forEach((o,i)=>o.p=i/ps.length);
+    render();
+  }
+  $(&quot;#btnPlay&quot;).onclick=()=> playing?pause():play(true);   // いつでも最初から
+  $(&quot;#btnGhost&quot;).onclick=e=>{ ghost=!ghost; e.currentTarget.classList.toggle(&quot;on&quot;,ghost); render(); };
+  document.addEventListener(&quot;keydown&quot;,e=>{
+    if(e.code===&quot;Space&quot;){e.preventDefault(); playing?pause():play();}
+    if(e.key===&quot;r&quot;||e.key===&quot;R&quot;){pause();reset();}
+  });
+
+  $(&quot;#app&quot;).classList.add(&quot;paused&quot;);
+  reset();
+})();
+</script>
+</body>
+</html>"></iframe>
+          </div>
+        </div>
+      </div>
+
       </div>
     </section>
 
@@ -814,10 +2665,11 @@ const SET_TITLE = {
   '2':'昔の風水害から、どんなたいさくが生まれたのだろう。',
   '3':'都や区は、風水害にどうそなえているのだろう。',
   '4':'災害からくらしを守るために、どのようなことがたいせつなのだろう。',
-  '5':'学んだことをまとめ、たしかめよう。'
+  '5':'学んだことをまとめ、たしかめよう。',
+  '6':'資料を見て、風水害についてもっとくわしく調べよう。'
 };
 const SET_EYE = { '1':'風水害について調べる','2':'風水害について調べる',
-                  '3':'風水害について調べる','4':'風水害について調べる','5':'まとめ' };
+                  '3':'風水害について調べる','4':'風水害について調べる','5':'まとめ','6':'資料' };
 let curSet = '1', curMode = 'doc';
 function applyView(){
   setwraps.forEach(w=>{
@@ -826,7 +2678,7 @@ function applyView(){
   });
   h1set.textContent   = SET_TITLE[curSet];
   eyebrow1.textContent = SET_EYE[curSet];
-  seg1.style.display   = (curSet === '5') ? 'none' : '';
+  seg1.style.display   = (curSet === '5' || curSet === '6') ? 'none' : '';
 }
 setsel.addEventListener('click', e=>{
   const b = e.target.closest('button'); if(!b) return;
@@ -946,7 +2798,7 @@ document.addEventListener('keydown', e=>{
   const now  = btns.findIndex(b=>b.classList.contains('on'));
   if(e.key==='ArrowRight') btns[(now+1)%btns.length].click();
   if(e.key==='ArrowLeft')  btns[(now-1+btns.length)%btns.length].click();
-  if(/^[1-5]$/.test(e.key)) btns[+e.key-1].click();
+  if(/^[1-6]$/.test(e.key)) btns[+e.key-1].click();
 });
 
 /* ========== ヒント（共通） ========== */
@@ -1748,6 +3600,15 @@ document.getElementById('q4reset').addEventListener('click', ()=>{
 });
 [stamp1a,stamp2a,stamp2c,stamp3c,stamp4a,stamp4b,stamp4c].forEach(el=>el.src = document.getElementById('stamp1').src);
 buildS4P0(); buildS4P1(); buildS4P2(); buildS4P3(); showPart4(0);
+
+/* ========== 資料（中のタブの切りかえ） ========== */
+const reftabs   = document.getElementById('reftabs');
+const refframes = [...document.querySelectorAll('.refframe')];
+reftabs.addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  [...reftabs.children].forEach(x=>x.classList.toggle('on', x===b));
+  refframes.forEach(f=>f.classList.toggle('on', f.dataset.r===b.dataset.r));
+});
 
 /* ========== まとめのクイズ ========== */
 const QUESTIONS = [
