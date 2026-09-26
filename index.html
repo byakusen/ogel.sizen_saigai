@@ -4180,5 +4180,309 @@ document.getElementById('again').addEventListener('click',()=>{
 });
 render();
 </script>
+<!-- ============================================================
+     📝 テストの練習 ①せってい（ここだけ直せば、出す問題や順番を変えられる）
+     test_renshu.html（取り出し版）を、このアプリのつくりに合わせたもの。
+     このアプリには MODES / setMode / showHanamaru / applyJudge がないので、
+     ②しくみは「画面のようす」を見て数える（アプリ本体は1行も直していない）。
+       ・その小問がおわった … 小問ボタン (1)(2)… に .cleared がついたとき
+       ・まちがい         … 選たくしに .shake がついたとき（ゆれる）
+       ・ヒント           … ヒントボタンをおして、ヒント帯が出たとき
+     ============================================================ -->
+<script>
+window.TEST_SETTEI = {
+  button: '📝 テストの練習',
+  wait: 3500,          /* 小問がおわってから、つぎへ進むまで（ミリ秒）。▶の文を読む時間 */
+  tests: [
+    /* items の1つ：
+         no   … 帯と結果に出る番号
+         set  … 課題の番号（'1'〜'4'）
+         p    … 小問の番号（(1)が 0、(2)が 1 …）
+         name … 結果に出す名前
+         write… 書く問題（まちがいがない。おわっても自動では進まず「つぎへ」をおす） */
+    { title:'テスト 1〜4問目（通し）', items:[
+      { no:'1(1)', set:'1', p:0, name:'話に合う資料をえらぶ' },
+      { no:'1(2)', set:'1', p:1, name:'正しい文をえらぶ' },
+      { no:'2(1)', set:'2', p:0, name:'話に合う資料をえらぶ' },
+      { no:'2(2)', set:'2', p:1, name:'ことばをえらぶ' },
+      { no:'2(3)', set:'2', p:2, name:'数を読み取る' },
+      { no:'3(1)', set:'3', p:0, name:'話に合う資料をえらぶ' },
+      { no:'3(2)', set:'3', p:1, name:'正しい文をえらぶ' },
+      { no:'3(3)', set:'3', p:2, name:'正しいことばを○でかこむ' },
+      { no:'4(1)', set:'4', p:0, name:'話に合う資料をえらぶ' },
+      { no:'4(2)', set:'4', p:1, name:'たいせつなことをえらぶ' },
+      { no:'4(3)', set:'4', p:2, name:'考えて書く', write:true },
+      { no:'4(4)', set:'4', p:3, name:'自助・共助・公助' } ] },
+    { title:'1問目　自然災害', items:[
+      { no:'1(1)', set:'1', p:0, name:'話に合う資料をえらぶ' },
+      { no:'1(2)', set:'1', p:1, name:'正しい文をえらぶ' } ] },
+    { title:'2問目　風水害とたいさく', items:[
+      { no:'2(1)', set:'2', p:0, name:'話に合う資料をえらぶ' },
+      { no:'2(2)', set:'2', p:1, name:'ことばをえらぶ' },
+      { no:'2(3)', set:'2', p:2, name:'数を読み取る' } ] },
+    { title:'3問目　都や区のそなえ', items:[
+      { no:'3(1)', set:'3', p:0, name:'話に合う資料をえらぶ' },
+      { no:'3(2)', set:'3', p:1, name:'正しい文をえらぶ' },
+      { no:'3(3)', set:'3', p:2, name:'正しいことばを○でかこむ' } ] },
+    { title:'4問目　自分たちのそなえ', items:[
+      { no:'4(1)', set:'4', p:0, name:'話に合う資料をえらぶ' },
+      { no:'4(2)', set:'4', p:1, name:'たいせつなことをえらぶ' },
+      { no:'4(3)', set:'4', p:2, name:'考えて書く', write:true },
+      { no:'4(4)', set:'4', p:3, name:'自助・共助・公助' } ] }
+  ]
+};
+</script>
+
+<!-- ============================================================
+     📝 テストの練習 ②しくみ（fuusuigai 用）— ふつうはさわらない
+     ============================================================ -->
+<script>
+window.TestRun = (function(){
+  'use strict';
+  const S = window.TEST_SETTEI;
+  const $ = id => document.getElementById(id);
+  const setBtn  = s => document.querySelector('#setsel button[data-set="'+s+'"]');
+  const partBtn = (s,p) => document.querySelector('#q'+s+'steps button[data-p="'+p+'"]');
+  const WAIT = (S && S.wait) || 3500;
+
+  /* ---- せっていをたしかめる（ない小問はとばす）---- */
+  if(!S || !Array.isArray(S.tests) || !S.tests.length || !$('setsel') || !$('seg1')){
+    console.warn('テストの練習：せっていか画面の部品がないので、うごきません'); return null;
+  }
+  const TESTS = S.tests.map(t => ({
+    title: t.title || 'テスト',
+    items: (t.items || []).filter(it => {
+      if(it && setBtn(it.set) && partBtn(it.set, it.p)) return true;
+      console.warn('テストの練習：小問「' + (it && it.no) + '」が見つからないので、とばします（' + t.title + '）');
+      return false;
+    })
+  })).filter(t => t.items.length);
+  if(!TESTS.length){ console.warn('テストの練習：出せる問題がありません'); return null; }
+
+  let run = null;   /* { t, i, rec:[{miss,hint,st}], back:{set,mode} } */
+  let timer = 0;
+
+  /* ---- 見た目（アプリの <style> はさわらない）---- */
+  const css = document.createElement('style');
+  css.id = 'test-style';
+  css.textContent = `
+#test-mount{position:relative;margin-left:auto;display:flex;align-items:center;padding-bottom:.4rem}
+#test-btn{font:inherit;font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:1.05rem;cursor:pointer;white-space:nowrap;
+  color:var(--ink);background:#FFE58A;border:none;border-radius:99px;padding:.3rem 1.1rem;box-shadow:0 3px 0 #C9A227}
+#test-btn:hover{background:#FFEDA8}
+#test-mount button:focus-visible,#test-result button:focus-visible{outline:3px solid #FFE58A;outline-offset:2px}
+#test-menu{display:none;position:absolute;top:calc(100% + .2rem);right:0;z-index:60;background:#fff;border:2px solid var(--line);
+  border-radius:14px;padding:.6rem;box-shadow:0 10px 28px rgba(9,26,42,.28);flex-direction:column;gap:.45rem;min-width:19rem}
+#test-menu.open{display:flex}
+#test-menu button{font:inherit;font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:1.12rem;cursor:pointer;white-space:nowrap;
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.6rem .9rem;border-radius:10px;
+  border:2px solid var(--line);background:#fff;color:var(--ink);text-align:left}
+#test-menu button:hover{background:#F3F7FA;border-color:var(--accent)}
+#test-menu button:first-child{border-color:#C9A227;background:#FFF8DC}
+#test-menu small{font-size:.85em;color:var(--ink-2)}
+#test-bar{display:none;align-items:center;gap:.6rem;white-space:nowrap;font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:1.05rem}
+#test-no{background:#FFE58A;color:var(--ink);border-radius:99px;padding:.15rem .8rem}
+#test-dots{letter-spacing:.12em;color:#FFE58A}
+#test-bar button{font:inherit;font-size:.92em;cursor:pointer;border-radius:99px;padding:.18rem .85rem;white-space:nowrap}
+#test-skip{color:var(--ink);background:#fff;border:none}
+#test-skip.go{background:#FFE58A;box-shadow:0 3px 0 #C9A227}
+#test-stop{color:#fff;background:transparent;border:2px solid rgba(255,255,255,.55)}
+body.testing #test-btn{display:none}
+body.testing #test-bar{display:flex}
+body.testing #setsel,body.testing .steps{pointer-events:none;opacity:.45}
+body.testing #seg1{visibility:hidden}
+#test-result{display:none;position:fixed;inset:0;z-index:100;background:rgba(9,26,42,.6);align-items:center;justify-content:center}
+#test-result.show{display:flex}
+#test-result .tr-card{background:#fff;border-radius:18px;padding:1.3rem 1.8rem;box-shadow:0 12px 40px rgba(0,0,0,.35);
+  max-width:94vw;max-height:94vh;overflow:auto;color:var(--ink)}
+#test-result .tr-title{font-family:"Zen Maru Gothic",sans-serif;font-weight:900;font-size:1.6rem;text-align:center;margin-bottom:.7rem}
+#test-result table{border-collapse:collapse;margin:0 auto;font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:1.2rem}
+#test-result td{padding:.32rem .8rem;border-bottom:2px dashed var(--line);white-space:nowrap}
+#test-result td.no{color:var(--ink-2)}
+#test-result td.r-ok{color:#1F8A4C}
+#test-result td.r-ng{color:var(--red)}
+#test-result td.r-sk{color:#8A9AA8}
+#test-result td.r-wr{color:var(--accent)}
+#test-result .tr-sum{text-align:center;margin-top:.8rem;font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:1.35rem}
+#test-result .tr-sum b{color:var(--red);font-size:1.4em}
+#test-result .tr-btns{display:flex;gap:.8rem;justify-content:center;margin-top:1rem}
+#test-result button{font:inherit;font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:1.2rem;cursor:pointer;padding:.55rem 1.4rem;border-radius:12px}
+#test-again{color:#fff;background:var(--accent);border:none;box-shadow:0 3px 0 #13507C}
+#test-close{color:var(--ink-2);background:#fff;border:2px solid var(--line)}
+`;
+  document.head.appendChild(css);
+
+  /* ---- ボタン・メニュー・帯（上の紺色の帯の右はし）---- */
+  const mount = document.createElement('div');
+  mount.id = 'test-mount';
+  mount.innerHTML =
+      '<button id="test-btn" type="button">' + (S.button || '📝 テストの練習') + '</button>'
+    + '<div id="test-menu">'
+    +   TESTS.map((t,k) => '<button type="button" data-k="'+k+'">'+t.title+'<small>'+t.items.length+'問</small></button>').join('')
+    + '</div>'
+    + '<div id="test-bar"><span id="test-no"></span><span id="test-dots"></span>'
+    +   '<button id="test-skip" type="button">とばす</button>'
+    +   '<button id="test-stop" type="button">やめる</button></div>';
+  (document.querySelector('.topbar') || document.body).appendChild(mount);
+  const res = document.createElement('div');
+  res.id = 'test-result';
+  document.body.appendChild(res);
+
+  $('test-btn').addEventListener('click', e => {
+    e.stopPropagation();
+    if(TESTS.length === 1){ start(0); return; }
+    $('test-menu').classList.toggle('open');
+  });
+  $('test-menu').addEventListener('click', e => {
+    const b = e.target.closest('button[data-k]'); if(!b) return;
+    $('test-menu').classList.remove('open');
+    start(+b.dataset.k);
+  });
+  document.addEventListener('click', e => {
+    if(!e.target.closest('#test-mount')) $('test-menu').classList.remove('open');
+  });
+  $('test-skip').addEventListener('click', () => {
+    const r = cur(); if(!r) return;
+    if(r.st === 'done'){ next(); return; }      /* 書く問題で「つぎへ」 */
+    r.st = 'skip'; next();
+  });
+  $('test-stop').addEventListener('click', () => stop());
+
+  /* キー：Esc でメニューをとじる。テスト中は 1〜6・←→ で課題が変わらないようにする
+     （資料を大きく見ているときの ←→ はそのまま使える） */
+  window.addEventListener('keydown', e => {
+    if(e.key === 'Escape') $('test-menu').classList.remove('open');
+    if(!run) return;
+    const lb = $('lb');
+    if(lb && lb.classList.contains('on')) return;
+    if(/^[1-6]$/.test(e.key) || e.key === 'ArrowLeft' || e.key === 'ArrowRight') e.stopImmediatePropagation();
+  }, true);
+
+  /* ---- 画面のようすを見て数える ---- */
+  const wraps = {};
+  ['1','2','3','4'].forEach(s => { wraps[s] = document.querySelector('.setwrap[data-set="'+s+'"]'); });
+  const had = (m, c) => (' ' + (m.oldValue || '') + ' ').indexOf(' ' + c + ' ') >= 0;
+  const obs = new MutationObserver(list => {
+    if(!run) return;
+    const it = item(), r = cur();
+    if(!it || !r || r.st !== 'todo') return;
+    for(const m of list){
+      const el = m.target;
+      /* まちがい：選たくしがゆれた */
+      if(el.classList.contains('shake') && !had(m,'shake') && wraps[it.set] && wraps[it.set].contains(el)){ r.miss++; }
+      /* おわり：いまの小問のボタンに .cleared がついた */
+      if(el === partBtn(it.set, it.p) && el.classList.contains('cleared') && !had(m,'cleared')){ done(); return; }
+    }
+  });
+  Object.values(wraps).forEach(w => { if(w) obs.observe(w, { subtree:true, attributes:true, attributeFilter:['class'], attributeOldValue:true }); });
+  /* ヒント：ヒントボタンをおしたあと、ヒント帯が出ていれば 💡 */
+  ['1','2','3','4'].forEach(s => {
+    const hb = $('hintbtn'+s), bar = $('hintbar'+s);
+    if(hb) hb.addEventListener('click', () => setTimeout(() => {
+      const it = item(), r = cur();
+      if(r && it.set === s && r.st === 'todo' && (!bar || bar.classList.contains('on'))) r.hint = true;
+    }, 0));
+  });
+
+  /* ---- 中身 ---- */
+  function item(){ return run ? TESTS[run.t].items[run.i] : null; }
+  function cur(){ return run ? run.rec[run.i] : null; }
+  function clearT(){ clearTimeout(timer); timer = 0; }
+  function bar(){
+    if(!run) return;
+    const T = TESTS[run.t], it = item(), r = cur();
+    $('test-no').textContent = '📝 ' + it.no + '（' + (run.i+1) + '／' + T.items.length + '）';
+    $('test-dots').textContent = run.rec.map((x,i) => x.st==='done' ? '●' : x.st==='skip' ? '－' : (i===run.i ? '◎' : '○')).join('');
+    const sk = $('test-skip');
+    const goBtn = r.st === 'done' && it.write;
+    sk.textContent = goBtn ? 'つぎへ ▶' : 'とばす';
+    sk.classList.toggle('go', goBtn);
+  }
+  function open(it){
+    const sb = setBtn(it.set);
+    if(!sb.classList.contains('on')) sb.click();
+    const qb = document.querySelector('#seg1 button[data-v="q"]');
+    if(qb && !qb.classList.contains('on')) qb.click();
+    partBtn(it.set, it.p).click();
+  }
+  function go(i){
+    clearT();
+    run.i = i;
+    open(item());
+    bar();
+  }
+  function resetAll(){
+    ['q1reset','q2reset','q3reset','q4reset'].forEach(id => { const b = $(id); if(b) b.click(); });
+  }
+  function start(t){
+    clearT();
+    res.classList.remove('show');
+    const back = run ? run.back : { set:(typeof curSet === 'string' ? curSet : '1'), mode:(typeof curMode === 'string' ? curMode : 'doc') };
+    run = { t:t, i:0, rec:TESTS[t].items.map(() => ({ miss:0, hint:false, st:'todo' })), back:back };
+    document.body.classList.add('testing');
+    resetAll();          /* 毎回はじめから（資料えらびの順番も変わる） */
+    go(0);
+  }
+  function done(){
+    const r = cur(); r.st = 'done';
+    bar();
+    if(item().write) return;                 /* 書く問題は「つぎへ」をおすまで待つ */
+    clearT();
+    timer = setTimeout(next, WAIT);
+  }
+  function next(){
+    if(!run) return;
+    clearT();
+    if(run.i + 1 < run.rec.length) go(run.i + 1);
+    else finish();
+  }
+  function finish(){
+    clearT();
+    bar();
+    const T = TESTS[run.t];
+    let perfect = 0, total = 0;
+    const rows = T.items.map((it,i) => {
+      const r = run.rec[i];
+      let tx, c;
+      if(!it.write) total++;
+      if(r.st === 'done' && it.write){ tx = '✏️ 書いた'; c = 'r-wr'; }
+      else if(r.st === 'done' && r.miss === 0){ tx = '⭕ ノーミス'; c = 'r-ok'; perfect++; }
+      else if(r.st === 'done'){ tx = 'まちがい ' + r.miss + '回'; c = 'r-ng'; }
+      else { tx = 'とばした'; c = 'r-sk'; }
+      return '<tr><td class="no">'+it.no+'</td><td>'+it.name+'</td><td class="'+c+'">'+tx+'</td><td>'+(r.hint ? '💡' : '')+'</td></tr>';
+    }).join('');
+    res.innerHTML = '<div class="tr-card">'
+      + '<div class="tr-title">📝 ' + T.title + '　おわり！</div>'
+      + '<table>' + rows + '</table>'
+      + '<div class="tr-sum">ノーミスでできた問題　<b>' + perfect + '</b> ／ ' + total + '</div>'
+      + '<div class="tr-btns"><button id="test-again" type="button">もう一度</button><button id="test-close" type="button">とじる</button></div>'
+      + '</div>';
+    res.classList.add('show');
+    $('test-again').onclick = () => start(run.t);
+    $('test-close').onclick = () => stop();
+    $('test-again').focus();
+  }
+  /* やめる／とじる：テストを始める前の課題と「説明／問題」にもどす */
+  function stop(){
+    if(!run) return;
+    const back = run.back;
+    run = null;
+    clearT();
+    res.classList.remove('show');
+    document.body.classList.remove('testing');
+    const sb = setBtn(back.set); if(sb) sb.click();
+    const vb = document.querySelector('#seg1 button[data-v="'+back.mode+'"]'); if(vb) vb.click();
+  }
+
+  return {
+    on: () => !!run,
+    start: t => start(t || 0),
+    stop:  () => stop(),
+    record: () => run ? JSON.parse(JSON.stringify(run.rec)) : null
+  };
+})();
+</script>
+<!-- 📝 テストの練習 ここまで -->
+
 </body>
 </html>
